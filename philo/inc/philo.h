@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:20:27 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 21:21:30 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int		id;
-	int		ms_to_die;
-	int		ms_to_sleep;
-	int		ms_to_eat;
-	int		ms_since_last_eat;
-	int		must_eat_cnt;
-	int		left_fork;
-	int		right_fork;
+	int			id;
+	int			ms_to_die;
+	int			ms_to_sleep;
+	int			ms_to_eat;
+	int			ms_since_last_eat;
+	int			must_eat_cnt;
+	int			left_fork;
+	int			right_fork;
+	pthread_t	*thread;
 }				t_philo;
 
 typedef struct s_fork
