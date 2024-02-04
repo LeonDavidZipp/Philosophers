@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 12:09:52 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 12:26:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,22 @@
 # include <sys/time.h>
 # include <limits.h>
 
+typedef struct s_data
+{
+	int		philo_cnt;
+	int		t_to_die;
+	int		t_to_eat;
+	int		t_to_sleep;
+	int		must_eat_cnt;
+}				t_data;
+
 typedef struct s_philo
 {
-	unsigned int		id;
-	unsigned int		t_to_die;
-	unsigned int		t_to_eat;
-	unsigned int		t_to_sleep;
-	unsigned int		must_eat_cnt;
+	int		id;
+	int		t_to_die;
+	int		t_to_eat;
+	int		t_to_sleep;
+	int		must_eat_cnt;
 }				t_philo;
 
 #endif
