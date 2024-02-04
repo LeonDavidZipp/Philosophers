@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:07:50 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:11:12 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 	return (philos);
 }
 
-void	fill_philos(t_data *data, t_philo **philos)
+void	fill_philos(t_data *data, t_philo **philos, pthread_mutex_t **forks)
 {
 	int	i;
 
@@ -61,6 +61,7 @@ void	fill_philos(t_data *data, t_philo **philos)
 		{
 			printf("\033[0;31mError: malloc failed\033[0m\n");
 			ft_free_2d_arr((void **)philos);
+			ft_free_2d_mutex_arr(forks);
 			free(data);
 			exit(1);
 		}
