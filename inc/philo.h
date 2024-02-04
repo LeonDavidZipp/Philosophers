@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 12:41:11 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 14:17:24 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,15 @@ typedef struct s_philo
 	int		ms_to_sleep;
 	int		must_eat_cnt;
 }				t_philo;
+
+// input_parsing
+t_data	*parse_input(int argc, char **argv);
+
+// messages
+void	fork_message(long long ms, int id);
+void	eat_message(long long ms, int id);
+void	sleep_message(long long ms, int id);
+void	think_message(long long ms, int id);
+void	death_message(long long ms, int id);
 
 #endif
