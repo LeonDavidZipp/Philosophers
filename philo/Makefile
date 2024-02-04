@@ -6,17 +6,17 @@
 #    By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/04 14:59:40 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/04 15:26:32 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
 CC := cc
-CFLAGS = -Wextra -Wall -Werror
+CFLAGS = -Wextra -Wall -Werror -pthread
 
 SOURCES = $(addprefix src/, \
-input_parsing.c \
+create_data.c \
 messages.c \
 get_time.c \
 main.c) 
