@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   state_methods.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/04 21:26:52 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:06:39 by lzipp            ###   ########.fr       */
+/*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
+/*   Updated: 2024/02/05 00:31:09 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,48 @@
 // 		}
 // 	}
 // }
+
+const void	philo_eat(t_philo *philo);
+const void	philo_sleep(t_philo *philo);
+const void	philo_death(t_philo *philo);
+
+void	philo_routine(t_philo *philo)
+{
+	while (true)
+	{
+		think_message(get_time(), philo->id);
+		philo_eat(philo);
+		philo_sleep(philo);
+		if (philo->must_eat_cnt > 0)
+			philo->must_eat_cnt--;
+	}
+}
+
+const void	philo_eat(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(philo->left_fork);
+	}
+	eat_message(get_time(), philo->id);
+	usleep(philo->ms_to_eat);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
+
+const void	philo_sleep(t_philo *philo)
+{
+	sleep_message(get_time(), philo->id);
+	usleep(philo->ms_to_sleep);
+}
+
+const void	philo_death(t_philo *philo)
+{
+	death_message(get_time(), philo->id);
+}

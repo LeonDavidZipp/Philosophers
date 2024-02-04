@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:11:12 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:17:05 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,26 @@
 
 typedef struct s_data
 {
-	int			philo_cnt;
-	int			fork_cnt;
-	int			ms_to_die;
-	int			ms_to_sleep;
-	int			ms_to_eat;
-	int			must_eat_cnt;
-	long long	start_time;
+	int						philo_cnt;
+	int						fork_cnt;
+	int						ms_to_die;
+	int						ms_to_sleep;
+	int						ms_to_eat;
+	int						must_eat_cnt;
+	long long				start_time;
 }				t_data;
 
 typedef struct s_philo
 {
-	int			id;
-	int			ms_to_die;
-	int			ms_to_sleep;
-	int			ms_to_eat;
-	int			ms_since_last_eat;
-	int			must_eat_cnt;
-	int			left_fork;
-	int			right_fork;
-	pthread_t	*thread;
+	int						id;
+	int						ms_to_die;
+	int						ms_to_sleep;
+	int						ms_to_eat;
+	int						ms_since_last_eat;
+	int						must_eat_cnt;
+	pthread_mutex_t			*left_fork;
+	pthread_mutex_t			*right_fork;
+	pthread_t				*thread;
 }				t_philo;
 
 // creating data, forks, philos

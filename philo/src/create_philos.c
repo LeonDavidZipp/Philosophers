@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:11:12 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:16:03 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	fill_philos(t_data *data, t_philo **philos, pthread_mutex_t **forks)
 		philos[i]->ms_to_eat = data->ms_to_eat;
 		philos[i]->ms_since_last_eat = 0;
 		philos[i]->must_eat_cnt = data->must_eat_cnt;
-		philos[i]->left_fork = i;
-		philos[i]->right_fork = (i + 1) % data->philo_cnt;
+		philos[i]->left_fork = forks[i];
+		philos[i]->right_fork = forks[(i + 1) % data->philo_cnt];
 	}
 }
