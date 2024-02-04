@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:09:27 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 21:58:02 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,6 @@ t_philo	**create_philos(t_data *data)
 		philos[i]->ms_to_eat = data->ms_to_eat;
 		philos[i]->ms_since_last_eat = 0;
 		philos[i]->must_eat_cnt = data->must_eat_cnt;
-	}
-	return (philos);
-}
-
-pthread_t	**init_philos(t_data *data)
-{
-	pthread_t	**philos;
-	int			i;
-
-	philos = (pthread_t *)ft_calloc(data->philo_cnt, sizeof(pthread_t));
-	i = -1;
-	while (++i < data->philo_cnt)
-	{
-		pthread_create(philos[i], NULL, &philo_routine, (void *)data);
-		i++;
 	}
 	return (philos);
 }

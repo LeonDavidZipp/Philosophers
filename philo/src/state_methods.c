@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   state_methods.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/04 12:48:08 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 22:23:09 by lzipp            ###   ########.fr       */
+/*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
+/*   Updated: 2024/02/04 22:24:50 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	main(int argc, char **argv)
+void	philo_think(t_philo *philo)
 {
-	t_data				*data;
-	t_data				**philos;
-	pthread_mutex_t		*mutex;
-
-	data = create_data(argc, argv);
-	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	mutex = init_mutex(data);
-	philos = init_philos(data);
-	start_simulation(data);
-	cleanup(data);
-	return (0);
+	think_message(get_time(), philo->id);
 }
+
+void	philo_eat(t_philo *philo, pthread_mutex_t *mutex)
+{
+	pthread_mutex_lock(mutex);
+	eat_message(get_time(), philo->id);
+	usleep(philo->ms_to_eat);
+}
+
+void	philo_sleep(t_philo *philo)
+{
+	sleep_message(get_time(), philo->id);
+	usleep(philo->ms_to_sleep);
+}
+
+void	philo_death(void)
+{
+	death_message(get_time(), id);
+}
+
