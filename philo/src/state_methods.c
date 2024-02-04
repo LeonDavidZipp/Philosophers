@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 22:24:50 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:07:02 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ void	philo_death(void)
 {
 	death_message(get_time(), id);
 }
-

@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:04:59 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:07:50 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	fill_philos(t_data *data, t_philo **philos)
 		if (!philos[i])
 		{
 			printf("\033[0;31mError: malloc failed\033[0m\n");
-			i = -1;
-			while (++i < data->philo_cnt)
-				free(philos[i]);
-			free(philos);
+			ft_free_2d_arr((void **)philos);
 			free(data);
 			exit(1);
 		}
@@ -76,16 +73,4 @@ void	fill_philos(t_data *data, t_philo **philos)
 		philos[i]->left_fork = i;
 		philos[i]->right_fork = (i + 1) % data->philo_cnt;
 	}
-}
-
-void	*philo_routine(void *data)
-{
-	t_data	*philo;
-
-	philo = (t_data *)data;
-	while (1)
-	{
-		;// do something
-	}
-	return (NULL);
 }
