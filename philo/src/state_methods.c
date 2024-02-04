@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 22:01:48 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 22:24:50 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	philo_think(t_philo *philo)
 {
 	think_message(get_time(), philo->id);
-	pthread_mutex_lock(mutex);
 }
 
 void	philo_eat(t_philo *philo, pthread_mutex_t *mutex)
 {
+	pthread_mutex_lock(mutex);
 	eat_message(get_time(), philo->id);
 	usleep(philo->ms_to_eat);
 }
