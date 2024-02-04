@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parsing.c                                    :+:      :+:    :+:   */
+/*   create_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 14:58:54 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 15:29:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	ft_atoi(const char *str);
 static void	check_arg_num(int argc, int req, int max);
+void		fill_data(t_data *data, int argc, char **argv);
 
-t_data	*parse_input(int argc, char **argv)
+t_data	*create_data(int argc, char **argv)
 {
 	t_data	*data;
 
@@ -26,7 +27,14 @@ t_data	*parse_input(int argc, char **argv)
 		write(2, "Error: malloc failed\n", 21);
 		exit(1);
 	}
+	fill_data(data, argc, argv);
+	return (data);
+}
+
+void	fill_data(t_data *data, int argc, char **argv)
+{
 	data->philo_cnt = ft_atoi(argv[1]);
+	data->fork_cnt = data->philo_cnt;
 	data->ms_to_die = ft_atoi(argv[2]);
 	data->ms_to_eat = ft_atoi(argv[3]);
 	data->ms_to_sleep = ft_atoi(argv[4]);
@@ -41,8 +49,8 @@ t_data	*parse_input(int argc, char **argv)
 		exit(1);
 	}
 	data->start_time = get_time();
-	return (data);
 }
+	
 
 static void	check_arg_num(int argc, int req, int max)
 {
