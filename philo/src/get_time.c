@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 14:58:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 15:02:26 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:36:24 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 long long	get_time(void)
 {
-	struct timeval		*tv;
+	struct timeval		*time;
 	long long			ms;
 
-	tv = (struct timeval *)malloc(sizeof(struct timeval));
-	gettimeofday(tv, NULL);
-	ms = tv->tv_sec * 1000LL + tv->tv_usec / 1000LL;
-	free(tv);
+	time = (struct timeval *)malloc(sizeof(struct timeval));
+	gettimeofday(time, NULL);
+	ms = time->tv_sec * 1000LL + time->tv_usec / 1000LL;
+	free(time);
 	return (ms);
 }

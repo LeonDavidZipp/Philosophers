@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   state_methods.c                                    :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:31:09 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:38:08 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ const void	philo_eat(t_philo *philo);
 const void	philo_sleep(t_philo *philo);
 const void	philo_death(t_philo *philo);
 
-void	philo_routine(t_philo *philo)
+void	philo_routine(t_philo *philo, t_data *data)
 {
 	while (true)
 	{

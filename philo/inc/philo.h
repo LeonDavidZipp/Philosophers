@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:17:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:41:42 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_philo
 	int						ms_to_die;
 	int						ms_to_sleep;
 	int						ms_to_eat;
-	int						ms_since_last_eat;
+	int						ms_last_ate_at;
 	int						must_eat_cnt;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
@@ -49,6 +49,9 @@ typedef struct s_philo
 t_data			*create_data(int argc, char **argv);
 pthread_mutex_t	**create_forks(t_data *data);
 t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
+
+// philo_routine
+void			philo_routine(t_philo *philo);
 
 // time
 long long		get_time(void);
