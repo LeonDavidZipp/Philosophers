@@ -6,11 +6,11 @@
 #    By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/04 14:18:19 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/04 14:49:09 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-name := philo
+NAME := philo
 
 CC := cc
 CFLAGS = -Wextra -Wall -Werror
