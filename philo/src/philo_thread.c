@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:02:36 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 21:09:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_philo	**create_philos(t_data *data)
 			free(philos);
 			exit(1);
 		}
-		philos[i]->id = i;
+		philos[i]->id = i + 1;
 		philos[i]->ms_to_die = data->ms_to_die;
 		philos[i]->ms_to_eat = data->ms_to_eat;
 		philos[i]->ms_since_last_eat = 0;
