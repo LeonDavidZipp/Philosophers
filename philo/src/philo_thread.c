@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 20:40:38 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 20:49:49 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_philo	**create_philos(t_data *data)
 		philos[i] = (t_philo *)malloc(sizeof(t_philo));
 		if (!philos[i])
 		{
-			write(2, "Error: malloc failed\n", 21);
+			printf("Error: malloc failed\n");
 			i = -1;
 			while (++i < data->philo_cnt)
 				free(philos[i]);

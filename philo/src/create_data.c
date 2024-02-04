@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 18:18:02 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 20:51:08 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_data	*create_data(int argc, char **argv)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 	{
-		write(2, "Error: malloc failed\n", 21);
+		printf("Error: malloc failed\n");
 		exit(1);
 	}
 	fill_data(data, argc, argv);
@@ -44,7 +44,7 @@ static void	fill_data(t_data *data, int argc, char **argv)
 	if (data->philo_cnt < 1 || data->ms_to_die < 1 || data->ms_to_eat < 1
 		|| data->ms_to_sleep < 1 || (argc == 6 && data->must_eat_cnt < 1))
 	{
-		write(2, "Error: invalid arguments\n", 26);
+		printf("Error: invalid arguments\n");
 		free(data);
 		exit(1);
 	}
@@ -55,12 +55,12 @@ static void	check_arg_num(int argc, int req, int max)
 {
 	if (argc < req)
 	{
-		write(2, "Error: too few arguments\n", 26);
+		printf("Error: too few arguments\n");
 		exit(1);
 	}
 	if (argc > max)
 	{
-		write(2, "Error: too many arguments\n", 27);
+		printf("Error: too many arguments\n");
 		exit(1);
 	}
 }
