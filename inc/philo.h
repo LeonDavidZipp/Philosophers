@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 14:17:24 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 14:59:30 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 
 typedef struct s_data
 {
-	int		philo_cnt;
-	int		fork_cnt;
-	int		ms_to_die;
-	int		ms_to_eat;
-	int		ms_to_sleep;
-	int		must_eat_cnt;
+	int			philo_cnt;
+	int			fork_cnt;
+	int			ms_to_die;
+	int			ms_to_eat;
+	int			ms_to_sleep;
+	int			must_eat_cnt;
+	long long	start_time;
 }				t_data;
 
 typedef struct s_philo
@@ -42,6 +43,9 @@ typedef struct s_philo
 
 // input_parsing
 t_data	*parse_input(int argc, char **argv);
+
+// time
+long long	get_time(void);
 
 // messages
 void	fork_message(long long ms, int id);

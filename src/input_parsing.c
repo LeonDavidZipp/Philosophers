@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 12:41:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 14:58:54 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ t_data	*parse_input(int argc, char **argv)
 	data->ms_to_die = ft_atoi(argv[2]);
 	data->ms_to_eat = ft_atoi(argv[3]);
 	data->ms_to_sleep = ft_atoi(argv[4]);
+	data->must_eat_cnt = -1;
 	if (argc == 6)
 		data->must_eat_cnt = ft_atoi(argv[5]);
-	else
-		data->must_eat_cnt = -1;
 	if (data->philo_cnt < 1 || data->ms_to_die < 1 || data->ms_to_eat < 1
 		|| data->ms_to_sleep < 1 || (argc == 6 && data->must_eat_cnt < 1))
 	{
@@ -41,6 +40,7 @@ t_data	*parse_input(int argc, char **argv)
 		free(data);
 		exit(1);
 	}
+	data->start_time = get_time();
 	return (data);
 }
 

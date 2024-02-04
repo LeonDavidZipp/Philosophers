@@ -6,7 +6,7 @@
 #    By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/04 14:49:09 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/04 14:59:40 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ CFLAGS = -Wextra -Wall -Werror
 SOURCES = $(addprefix src/, \
 input_parsing.c \
 messages.c \
+get_time.c \
 main.c) 
 OBJECTS = $(SOURCES:.c=.o)
 
