@@ -6,14 +6,11 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:41:11 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:44:54 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void	*philo_routine(void *data);
-void	*ft_calloc(size_t count, size_t size);
 
 // this will only be an example
 // pthread_join, pthread_mutex_init,
@@ -43,7 +40,7 @@ t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 		philos[i]->id = i + 1;
 		philos[i]->ms_to_die = data->ms_to_die;
 		philos[i]->ms_to_eat = data->ms_to_eat;
-		philos[i]->ms_since_last_eat = 0;
+		philos[i]->ms_last_ate_at = 0;
 		philos[i]->must_eat_cnt = data->must_eat_cnt;
 	}
 	return (philos);

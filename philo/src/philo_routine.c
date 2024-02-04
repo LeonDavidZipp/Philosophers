@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:38:08 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 00:50:08 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ const void	philo_eat(t_philo *philo);
 const void	philo_sleep(t_philo *philo);
 const void	philo_death(t_philo *philo);
 
-void	philo_routine(t_philo *philo, t_data *data)
+void	philo_routine(t_philo *philo)
 {
 	while (true)
 	{
@@ -58,6 +58,8 @@ void	philo_routine(t_philo *philo, t_data *data)
 
 const void	philo_eat(t_philo *philo)
 {
+	long long	ms_new_ate_at;
+
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -67,6 +69,12 @@ const void	philo_eat(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->right_fork);
 		pthread_mutex_lock(philo->left_fork);
+	}
+	ms_new_ate_at = get_time();
+	if (ms_new_ate_at - philo->ms_last_ate_at > philo->ms_to_die)
+	{
+		philo_death(philo);
+		return ;
 	}
 	eat_message(get_time(), philo->id);
 	usleep(philo->ms_to_eat);
