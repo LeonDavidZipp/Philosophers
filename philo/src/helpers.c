@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:54:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 22:55:32 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:02:03 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,18 @@ void	ft_free_2d_arr(void **arr)
 	i = -1;
 	while (arr[++i])
 		free(arr[i]);
+	free(arr);
+}
+
+void	free_2d_mutex_arr(pthread_mutex_t **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+	{
+		pthread_mutex_destroy(arr[i]);
+		free(arr[i]);
+	}
 	free(arr);
 }
