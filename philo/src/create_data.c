@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 15:29:18 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 18:18:02 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_data	*create_data(int argc, char **argv)
 	return (data);
 }
 
-void	fill_data(t_data *data, int argc, char **argv)
+static void	fill_data(t_data *data, int argc, char **argv)
 {
 	data->philo_cnt = ft_atoi(argv[1]);
 	data->fork_cnt = data->philo_cnt;
@@ -50,7 +50,6 @@ void	fill_data(t_data *data, int argc, char **argv)
 	}
 	data->start_time = get_time();
 }
-	
 
 static void	check_arg_num(int argc, int req, int max)
 {

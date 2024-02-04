@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 15:06:35 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 18:24:55 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ typedef struct s_philo
 {
 	int		id;
 	int		ms_to_die;
-	int		ms_to_eat;
 	int		ms_to_sleep;
+	int		ms_to_eat;
+	int		ms_since_last_eat;
 	int		must_eat_cnt;
 }				t_philo;
 
 // input_parsing
-t_data		*parse_input(int argc, char **argv);
+t_data		*create_data(int argc, char **argv);
 
 // time
 long long	get_time(void);
