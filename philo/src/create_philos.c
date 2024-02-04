@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 22:54:38 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:04:59 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_calloc(size_t count, size_t size);
 // pthread_mutex_unlock, pthread_create,
 // pthread_detach
 
-t_philo	**create_philos(t_data *data)
+t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 {
 	t_philo			**philos;
 	int				i;

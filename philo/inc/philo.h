@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:02:52 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 23:05:25 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,24 @@ typedef struct s_philo
 	pthread_t	*thread;
 }				t_philo;
 
-// input_parsing
-t_data		*create_data(int argc, char **argv);
+// creating data, forks, philos
+t_data			*create_data(int argc, char **argv);
+pthread_mutex_t	**create_forks(t_data *data);
+t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
 
 // time
-long long	get_time(void);
+long long		get_time(void);
 
 // messages
-void		fork_message(long long ms, int id);
-void		eat_message(long long ms, int id);
-void		sleep_message(long long ms, int id);
-void		think_message(long long ms, int id);
-void		death_message(long long ms, int id);
+void			fork_message(long long ms, int id);
+void			eat_message(long long ms, int id);
+void			sleep_message(long long ms, int id);
+void			think_message(long long ms, int id);
+void			death_message(long long ms, int id);
 
 // helpers
-void		*ft_calloc(size_t count, size_t size);
-void		ft_free_2d_arr(void **arr);
-void		free_2d_mutex_arr(pthread_mutex_t **arr)
+void			*ft_calloc(size_t count, size_t size);
+void			ft_free_2d_arr(void **arr);
+void			free_2d_mutex_arr(pthread_mutex_t **arr);
 
 #endif
