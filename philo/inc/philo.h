@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 18:24:55 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/04 21:20:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,15 @@ typedef struct s_philo
 	int		ms_to_eat;
 	int		ms_since_last_eat;
 	int		must_eat_cnt;
+	int		left_fork;
+	int		right_fork;
 }				t_philo;
+
+typedef struct s_fork
+{
+	int		id;
+	bool	is_taken;
+}				t_fork;
 
 // input_parsing
 t_data		*create_data(int argc, char **argv);
