@@ -6,63 +6,57 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 18:57:01 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 20:41:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-// philo_routine()
-// {
-// 	while (true)
-// 	{
-// 		think()
-// 		{
-// 			print is thinking;
-// 			wait till fork_left and fork_right are available;
-// 		}
-// 		take_forks();
-// 		eat()
-// 		{
-// 			print is eating;
-// 			wait for ms_to_eat;
-// 		}
-// 		put_forks_back();
-// 		sleep()
-// 		{
-// 			print is sleeping;
-// 			wait for ms_to_sleep;
-// 		}
-// 		if (must_eat_cnt > 0)
-// 		{
-// 			must_eat_cnt--;
-// 		}
-// 	}
-// }
 
 static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut);
 static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut);
 static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut);
 static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut);
 
-void	philo_routine(t_philo *philo, pthread_mutex_t *p_mut)
+bool	philo_routine(t_routine *routine)
 {
 	bool	is_alive;
 
 	is_alive = true;
-	while (true && (philo->must_eat_cnt == -1 || philo->must_eat_cnt > 0))
+	while (routine->philo->must_eat_cnt == -1
+		|| routine->philo->must_eat_cnt > 0)
 	{
-		think_message(get_time(), philo->id, p_mut);
-		is_alive = philo_eat(philo, p_mut);
+		think_message(get_time(), routine->philo->id, routine->p_mut);
+		is_alive = philo_eat(routine->philo, routine->p_mut);
 		if (!is_alive)
 			break ;
-		is_alive = philo_sleep(philo, p_mut);
+		is_alive = philo_sleep(routine->philo, routine->p_mut);
 		if (!is_alive)
 			break ;
-		if (philo->must_eat_cnt > 0)
-			philo->must_eat_cnt--;
+		if (routine->philo->must_eat_cnt > 0)
+			routine->philo->must_eat_cnt--;
 	}
+	return (is_alive);
 }
+
+// bool	philo_routine(t_philo *philo, pthread_mutex_t *p_mut)
+// {
+// 	bool	is_alive;
+
+// 	is_alive = true;
+// 	while (philo->must_eat_cnt == -1 || philo->must_eat_cnt > 0)
+// 	{
+// 		think_message(get_time(), philo->id, p_mut);
+// 		is_alive = philo_eat(philo, p_mut);
+// 		if (!is_alive)
+// 			break ;
+// 		is_alive = philo_sleep(philo, p_mut);
+// 		if (!is_alive)
+// 			break ;
+// 		if (philo->must_eat_cnt > 0)
+// 			philo->must_eat_cnt--;
+// 	}
+// 	return (is_alive);
+// }
 
 static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut)
 {
