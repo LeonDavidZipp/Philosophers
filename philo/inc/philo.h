@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:46:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 18:54:37 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void			philo_routine(t_philo *philo);
 long long		get_time(void);
 
 // messages
-void			fork_message(long long ms, int id);
-void			eat_message(long long ms, int id);
-void			sleep_message(long long ms, int id);
-void			think_message(long long ms, int id);
-void			death_message(long long ms, int id);
+void			fork_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			eat_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			sleep_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			think_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
