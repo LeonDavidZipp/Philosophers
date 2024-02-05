@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 00:50:08 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 10:50:03 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,31 @@
 // 	}
 // }
 
-const void	philo_eat(t_philo *philo);
-const void	philo_sleep(t_philo *philo);
-const void	philo_death(t_philo *philo);
+static bool	check_alive(t_philo *philo, long long time);
+static bool	philo_eat(t_philo *philo);
+static bool	philo_sleep(t_philo *philo);
+static void	philo_death(t_philo *philo);
 
 void	philo_routine(t_philo *philo)
 {
-	while (true)
+	bool	is_alive;
+
+	is_alive = true;
+	while (true && (philo->must_eat_cnt == -1 || philo->must_eat_cnt > 0))
 	{
 		think_message(get_time(), philo->id);
-		philo_eat(philo);
-		philo_sleep(philo);
+		is_alive = philo_eat(philo);
+		if (!is_alive)
+			break ;
+		is_alive = philo_sleep(philo);
+		if (!is_alive)
+			break ;
 		if (philo->must_eat_cnt > 0)
 			philo->must_eat_cnt--;
 	}
 }
 
-const void	philo_eat(t_philo *philo)
+static bool	philo_eat(t_philo *philo)
 {
 	long long	ms_new_ate_at;
 
@@ -74,21 +82,38 @@ const void	philo_eat(t_philo *philo)
 	if (ms_new_ate_at - philo->ms_last_ate_at > philo->ms_to_die)
 	{
 		philo_death(philo);
-		return ;
+		return (false);
 	}
-	eat_message(get_time(), philo->id);
+	philo->ms_last_ate_at = ms_new_ate_at;
+	eat_message(philo->ms_last_ate_at, philo->id);
 	usleep(philo->ms_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	return (true);
 }
 
-const void	philo_sleep(t_philo *philo)
+static bool	philo_sleep(t_philo *philo)
 {
 	sleep_message(get_time(), philo->id);
 	usleep(philo->ms_to_sleep);
+	return (check_alive(philo, -1));
 }
 
-const void	philo_death(t_philo *philo)
+static void	philo_death(t_philo *philo)
 {
 	death_message(get_time(), philo->id);
+}
+
+static bool	check_alive(t_philo *philo, long long time)
+{
+	if (time == -1)
+		time = get_time();
+	if (time - philo->ms_last_ate_at > philo->ms_to_die)
+	{
+		philo_death(philo);
+		return (false);
+	}
+	if (time > 0)
+		philo->ms_last_ate_at = time;
+	return (true);
 }
