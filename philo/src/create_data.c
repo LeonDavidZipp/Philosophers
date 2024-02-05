@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   create_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:03:32 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/05 19:00:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static int	ft_atoi(const char *str);
-static void	check_arg_num(int argc, int req, int max);
-void		fill_data(t_data *data, int argc, char **argv);
+static int		ft_atoi(const char *str);
+static void		check_arg_num(int argc, int req, int max);
+static void		fill_data(t_data *data, int argc, char **argv);
 
 t_data	*create_data(int argc, char **argv)
 {
