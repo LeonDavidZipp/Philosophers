@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+         #
+#    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/04 21:57:26 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/05 18:59:18 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,10 @@ CFLAGS = -Wextra -Wall -Werror -pthread
 
 SOURCES = $(addprefix src/, \
 create_data.c \
+create_forks.c \
+create_philos.c \
+philo_routine.c \
+helpers.c \
 messages.c \
 get_time.c \
 main.c) 
