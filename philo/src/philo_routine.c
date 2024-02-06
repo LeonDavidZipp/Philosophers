@@ -6,17 +6,16 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 21:34:18 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:53:42 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut);
-static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut);
+static bool	philo_eat(t_routine *routine);
 static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut);
-static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut,
-				pthread_mutex_t *death_mut);
+static void	philo_death(t_routine *routine);
 
 bool	philo_routine(t_routine *routine)
 {
@@ -27,7 +26,7 @@ bool	philo_routine(t_routine *routine)
 		|| routine->philo->must_eat_cnt > 0)
 	{
 		think_message(get_time(), routine->philo->id, routine->p_mut);
-		is_alive = philo_eat(routine->philo, routine->p_mut);
+		is_alive = philo_eat(routine);
 		if (!is_alive)
 			break ;
 		is_alive = philo_sleep(routine->philo, routine->p_mut);
@@ -39,60 +38,59 @@ bool	philo_routine(t_routine *routine)
 	routine->some_died = !is_alive;
 }
 
-static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut)
+static bool	philo_eat(t_routine *routine)
 {
 	long long	ms_new_ate_at;
 
-	if (philo->id % 2 == 0)
+	if (routine->philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(routine->philo->left_fork);
+		pthread_mutex_lock(routine->philo->right_fork);
 	}
 	else
 	{
-		pthread_mutex_lock(philo->right_fork);
-		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(routine->philo->right_fork);
+		pthread_mutex_lock(routine->philo->left_fork);
 	}
 	ms_new_ate_at = get_time();
-	if (ms_new_ate_at - philo->ms_last_ate_at > philo->ms_to_die)
+	if (ms_new_ate_at - routine->philo->ms_last_ate_at > routine->philo->ms_to_die)
 	{
-		philo_death(philo, p_mut);
+		philo_death(routine);
 		return (false);
 	}
-	philo->ms_last_ate_at = ms_new_ate_at;
-	eat_message(philo->ms_last_ate_at, philo->id, p_mut);
-	usleep(philo->ms_to_eat);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	routine->philo->ms_last_ate_at = ms_new_ate_at;
+	eat_message(routine->philo->ms_last_ate_at, routine->philo->id, routine->p_mut);
+	usleep(routine->philo->ms_to_eat);
+	pthread_mutex_unlock(routine->philo->left_fork);
+	pthread_mutex_unlock(routine->philo->right_fork);
 	return (true);
 }
 
-static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut)
+static bool	philo_sleep(t_routine *routine)
 {
-	sleep_message(get_time(), philo->id, p_mut);
-	usleep(philo->ms_to_sleep);
-	return (check_alive(philo, -1, p_mut));
+	sleep_message(get_time(), routine->philo->id, routine->p_mut);
+	usleep(routine->philo->ms_to_sleep);
+	return (check_alive(routine, -1));
 }
 
-static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut,
-	t_routine *routine)
+static void	philo_death(t_routine *routine)
 {
-	death_message(get_time(), philo->id, p_mut);
+	death_message(get_time(), routine->philo->id, routine->p_mut);
 	pthread_mutex_lock(routine->death_mut);
 	routine->some_died = true;
 	pthread_mutex_unlock(routine->death_mut);
 }
 
-static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut)
+static bool	check_alive(t_routine *routine, long long time)
 {
 	if (time == -1)
 		time = get_time();
-	if (time - philo->ms_last_ate_at > philo->ms_to_die)
+	if (time - routine->philo->ms_last_ate_at > routine->philo->ms_to_die)
 	{
-		philo_death(philo, p_mut);
+		philo_death(routine);
 		return (false);
 	}
 	if (time > 0)
-		philo->ms_last_ate_at = time;
+		routine->philo->ms_last_ate_at = time;
 	return (true);
 }
