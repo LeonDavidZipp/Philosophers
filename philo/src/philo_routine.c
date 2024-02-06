@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 21:56:57 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:59:19 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ static bool	philo_eat(t_routine *r)
 		pthread_mutex_lock(r->philo->left_fork);
 	}
 	ms_new_ate_at = get_time();
-	if (ms_new_ate_at - r->philo->ms_last_ate_at > r->philo->ms_to_die)
-	{
-		philo_death(r);
-		return (false);
-	}
+	check_alive(r, ms_new_ate_at);
 	r->philo->ms_last_ate_at = ms_new_ate_at;
 	eat_message(r->philo->ms_last_ate_at, r->philo->id, r->p_mut);
 	usleep(r->philo->ms_to_eat);
