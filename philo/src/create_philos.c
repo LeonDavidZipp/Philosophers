@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 22:55:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 22:55:57 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks);
 t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 {
 	t_philo			**philos;
-	int				i;
 
 	philos = (t_philo **)ft_calloc(data->philo_cnt + 1, sizeof(t_philo *));
 	fill_philos(philos, data, forks);
