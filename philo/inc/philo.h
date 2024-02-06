@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 23:12:46 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 23:36:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef struct s_data
 {
 	int						philo_cnt;
 	int						fork_cnt;
-	int						ms_to_die;
-	int						ms_to_sleep;
-	int						ms_to_eat;
+	long long				ms_to_die;
+	long long				ms_to_sleep;
+	long long				ms_to_eat;
 	int						must_eat_cnt;
 	long long				start_time;
 	bool					some_died;
@@ -36,11 +36,11 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int						id;
-	int						ms_to_die;
-	int						ms_to_sleep;
-	int						ms_to_eat;
-	int						ms_last_ate_at;
-	int						must_eat_cnt;
+	long long				ms_to_die;
+	long long				ms_to_sleep;
+	long long				ms_to_eat;
+	long long				ms_last_ate_at;
+	long long				must_eat_cnt;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
 	pthread_t				*thread;
