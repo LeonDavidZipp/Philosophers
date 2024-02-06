@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 13:30:10 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 14:25:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,17 @@ pthread_mutex_t	**create_forks(t_data *data);
 t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
 
 // philo_routine
-// void			philo_routine(t_philo *philo, pthread_mutex_t *p_mut);
 bool			philo_routine(t_routine *routine);
 
 // time
 long long		get_time(void);
 
 // messages
-void			fork_message(long long ms, int id, pthread_mutex_t p_mut);
-void			eat_message(long long ms, int id, pthread_mutex_t p_mut);
-void			sleep_message(long long ms, int id, pthread_mutex_t p_mut);
-void			think_message(long long ms, int id, pthread_mutex_t p_mut);
-void			death_message(long long ms, int id, pthread_mutex_t p_mut);
+void			fork_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			eat_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			sleep_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			think_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
