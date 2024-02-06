@@ -6,16 +6,16 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/06 22:54:39 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/06 23:21:27 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
 CC := cc
-CFLAGS = -Wextra -Wall -Werror -pthread
+CFLAGS := -Wextra -Wall -Werror
 
-SOURCES = $(addprefix src/, \
+SOURCES := $(addprefix src/, \
 create_data.c \
 create_forks.c \
 create_philos.c \
@@ -24,14 +24,13 @@ helpers.c \
 main.c \
 messages.c \
 philo_routine.c \
-messages.c \
 philosophize.c)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS := $(SOURCES:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar -rc $(NAME) $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(NAME)
 
 clean:
 	rm -f $(OBJECTS)

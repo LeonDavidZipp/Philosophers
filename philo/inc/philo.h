@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 23:03:15 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 23:12:46 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			philosophize(t_data *data, t_philo **philos,
 					pthread_mutex_t **forks);
 
 // philo_routine
-void			philo_routine(t_routine *routine);
+void			*philo_routine(void *r_void);
 
 // time
 long long		get_time(void);

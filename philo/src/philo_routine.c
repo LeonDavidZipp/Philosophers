@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 23:04:20 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 23:12:59 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ static void	philo_eat(t_routine *r);
 static void	philo_sleep(t_routine *r);
 static void	philo_death(t_routine *r);
 
-void	philo_routine(t_routine *r)
+void	*philo_routine(void *r_void)
 {
+	t_routine	*r;
+
+	r = (t_routine *)r_void;
 	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
 		&& *r->some_died == false)
 	{
@@ -35,6 +38,7 @@ void	philo_routine(t_routine *r)
 		if (r->philo->must_eat_cnt > 0)
 			r->philo->must_eat_cnt--;
 	}
+	return (NULL);
 }
 
 static void	philo_eat(t_routine *r)
