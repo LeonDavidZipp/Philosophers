@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 14:25:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 20:57:51 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 	int						ms_to_eat;
 	int						must_eat_cnt;
 	long long				start_time;
+	int						some_died;
 }				t_data;
 
 typedef struct s_philo
@@ -48,7 +49,9 @@ typedef struct s_philo
 typedef struct s_routine
 {
 	t_philo					*philo;
-	pthread_mutex_t			p_mut;
+	pthread_mutex_t			*p_mut;
+	int						*some_died;
+	pthread_mutex_t			*death_mut;
 }				t_routine;
 
 // creating data, forks, philos
