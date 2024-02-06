@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:21:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:26:32 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,58 @@
 
 typedef struct s_data
 {
-	int			philo_cnt;
-	int			fork_cnt;
-	int			ms_to_die;
-	int			ms_to_eat;
-	int			ms_to_sleep;
-	int			must_eat_cnt;
-	long long	start_time;
+	int						philo_cnt;
+	int						fork_cnt;
+	int						ms_to_die;
+	int						ms_to_sleep;
+	int						ms_to_eat;
+	int						must_eat_cnt;
+	long long				start_time;
+	bool					some_died;
 }				t_data;
 
 typedef struct s_philo
 {
-	int			id;
-	int			ms_to_die;
-	int			ms_to_sleep;
-	int			ms_to_eat;
-	int			ms_since_last_eat;
-	int			must_eat_cnt;
-	int			left_fork;
-	int			right_fork;
-	pthread_t	*thread;
+	int						id;
+	int						ms_to_die;
+	int						ms_to_sleep;
+	int						ms_to_eat;
+	int						ms_last_ate_at;
+	int						must_eat_cnt;
+	pthread_mutex_t			*left_fork;
+	pthread_mutex_t			*right_fork;
+	pthread_t				*thread;
 }				t_philo;
 
-typedef struct s_fork
+typedef struct s_routine
 {
-	int		id;
-	bool	is_taken;
-}				t_fork;
+	t_philo					*philo;
+	pthread_mutex_t			*p_mut;
+	bool					*some_died;
+	pthread_mutex_t			*death_mut;
+}				t_routine;
 
-// input_parsing
-t_data		*create_data(int argc, char **argv);
+// creating data, forks, philos
+t_data			*create_data(int argc, char **argv);
+pthread_mutex_t	**create_forks(t_data *data);
+t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
+
+// philo_routine
+bool			philo_routine(t_routine *routine);
 
 // time
-long long	get_time(void);
+long long		get_time(void);
 
 // messages
-void		fork_message(long long ms, int id);
-void		eat_message(long long ms, int id);
-void		sleep_message(long long ms, int id);
-void		think_message(long long ms, int id);
-void		death_message(long long ms, int id);
+void			fork_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			eat_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			sleep_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			think_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
+
+// helpers
+void			*ft_calloc(size_t count, size_t size);
+void			ft_free_2d_arr(void **arr);
+void			ft_free_2d_mutex_arr(pthread_mutex_t **arr);
 
 #endif

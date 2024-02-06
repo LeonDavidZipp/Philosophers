@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   create_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 21:03:32 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:31:46 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static int	ft_atoi(const char *str);
-static void	check_arg_num(int argc, int req, int max);
-void		fill_data(t_data *data, int argc, char **argv);
+static int		ft_atoi(const char *str);
+static void		fill_data(t_data *data, int argc, char **argv);
 
 t_data	*create_data(int argc, char **argv)
 {
 	t_data	*data;
 
-	check_arg_num(argc, 5, 6);
+	if (argc != 5 && argc != 6)
+	{
+		printf("\033[0;31mUsage: ./philo nr_of_philos t_to_die t_to_eat");
+		printf(" t_to_sleep [nr_must_eat]\033[0m\n");
+		exit(1);
+	}
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 	{
@@ -39,6 +43,7 @@ static void	fill_data(t_data *data, int argc, char **argv)
 	data->ms_to_eat = ft_atoi(argv[3]);
 	data->ms_to_sleep = ft_atoi(argv[4]);
 	data->must_eat_cnt = -1;
+	data->some_died = false;
 	if (argc == 6)
 		data->must_eat_cnt = ft_atoi(argv[5]);
 	if (data->philo_cnt < 1 || data->ms_to_die < 1 || data->ms_to_eat < 1
@@ -49,20 +54,6 @@ static void	fill_data(t_data *data, int argc, char **argv)
 		exit(1);
 	}
 	data->start_time = get_time();
-}
-
-static void	check_arg_num(int argc, int req, int max)
-{
-	if (argc < req)
-	{
-		printf("\033[0;31mError: too few arguments\033[0m\n");
-		exit(1);
-	}
-	if (argc > max)
-	{
-		printf("\033[0;31mError: too many arguments\033[0m\n");
-		exit(1);
-	}
 }
 
 static int	ft_atoi(const char *str)
