@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 15:29:48 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:31:46 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	fill_data(t_data *data, int argc, char **argv)
 	data->ms_to_eat = ft_atoi(argv[3]);
 	data->ms_to_sleep = ft_atoi(argv[4]);
 	data->must_eat_cnt = -1;
-	data->some_died = 0;
+	data->some_died = false;
 	if (argc == 6)
 		data->must_eat_cnt = ft_atoi(argv[5]);
 	if (data->philo_cnt < 1 || data->ms_to_die < 1 || data->ms_to_eat < 1

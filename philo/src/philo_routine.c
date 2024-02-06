@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 21:01:15 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:34:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,8 @@ bool	philo_routine(t_routine *routine)
 		if (routine->philo->must_eat_cnt > 0)
 			routine->philo->must_eat_cnt--;
 	}
-	routine
-	return (is_alive);
+	routine->some_died = !is_alive;
 }
-
-// bool	philo_routine(t_philo *philo, pthread_mutex_t *p_mut)
-// {
-// 	bool	is_alive;
-
-// 	is_alive = true;
-// 	while (philo->must_eat_cnt == -1 || philo->must_eat_cnt > 0)
-// 	{
-// 		think_message(get_time(), philo->id, p_mut);
-// 		is_alive = philo_eat(philo, p_mut);
-// 		if (!is_alive)
-// 			break ;
-// 		is_alive = philo_sleep(philo, p_mut);
-// 		if (!is_alive)
-// 			break ;
-// 		if (philo->must_eat_cnt > 0)
-// 			philo->must_eat_cnt--;
-// 	}
-// 	return (is_alive);
-// }
 
 static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut)
 {
@@ -96,11 +75,12 @@ static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut)
 }
 
 static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut,
-	pthread_mutex_t *death_mut)
+	t_routine *routine)
 {
 	death_message(get_time(), philo->id, p_mut);
-	pthread_mutex_lock(death_mut);
-	
+	pthread_mutex_lock(routine->death_mut);
+	routine->some_died = true;
+	pthread_mutex_unlock(routine->death_mut);
 }
 
 static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut)
