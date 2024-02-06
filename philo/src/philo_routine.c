@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 22:36:56 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 22:50:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@ static void	philo_death(t_routine *r);
 
 bool	philo_routine(t_routine *r)
 {
-	bool	is_alive;
-
-	is_alive = true;
-	while ((r->philo->must_eat_cnt == -1
-			|| r->philo->must_eat_cnt > 0) && *r->some_died == false)
+	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
+		&& *r->some_died == false)
 	{
-		check_alive(r, -1);
+		check_alive(r, get_time());
 		if (*r->some_died)
 			break ;
 		think_message(get_time(), r->philo->id, r->p_mut);
@@ -67,7 +64,7 @@ static void	philo_sleep(t_routine *r)
 {
 	sleep_message(get_time(), r->philo->id, r->p_mut);
 	usleep(r->philo->ms_to_sleep);
-	return (check_alive(r, -1));
+	check_alive(r, get_time());
 }
 
 static void	philo_death(t_routine *r)
@@ -80,8 +77,6 @@ static void	philo_death(t_routine *r)
 
 static void	check_alive(t_routine *r, long long time)
 {
-	if (time == -1)
-		time = get_time();
 	if (time - r->philo->ms_last_ate_at > r->philo->ms_to_die)
 		philo_death(r);
 	if (time > 0)
