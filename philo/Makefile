@@ -6,7 +6,7 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/05 18:59:18 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/06 12:49:43 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ philo_routine.c \
 helpers.c \
 messages.c \
 get_time.c \
-main.c) 
+main.c)
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)

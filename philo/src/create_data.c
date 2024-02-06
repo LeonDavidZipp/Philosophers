@@ -6,21 +6,25 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/05 19:00:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 12:57:21 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 static int		ft_atoi(const char *str);
-static void		check_arg_num(int argc, int req, int max);
 static void		fill_data(t_data *data, int argc, char **argv);
 
 t_data	*create_data(int argc, char **argv)
 {
 	t_data	*data;
 
-	check_arg_num(argc, 5, 6);
+	if (argc != 5 && argc != 6)
+	{
+		printf("\033[0;31mUsage: ./philo nr_of_philos t_to_die t_to_eat");
+		printf(" t_to_sleep [nr_must_eat]\033[0m\n");
+		exit(1);
+	}
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 	{
@@ -49,20 +53,6 @@ static void	fill_data(t_data *data, int argc, char **argv)
 		exit(1);
 	}
 	data->start_time = get_time();
-}
-
-static void	check_arg_num(int argc, int req, int max)
-{
-	if (argc < req)
-	{
-		printf("\033[0;31mError: too few arguments\033[0m\n");
-		exit(1);
-	}
-	if (argc > max)
-	{
-		printf("\033[0;31mError: too many arguments\033[0m\n");
-		exit(1);
-	}
 }
 
 static int	ft_atoi(const char *str)
