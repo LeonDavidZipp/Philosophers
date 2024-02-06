@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_philos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:13:44 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 20:47:17 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 22:55:30 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-// this will only be an example
-// pthread_join, pthread_mutex_init,
-// pthread_mutex_destroy, pthread_mutex_lock,
-// pthread_mutex_unlock, pthread_create,
-// pthread_detach
+void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks);
 
 t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 {

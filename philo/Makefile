@@ -6,7 +6,7 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/06 12:49:43 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/06 22:54:39 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,13 @@ SOURCES = $(addprefix src/, \
 create_data.c \
 create_forks.c \
 create_philos.c \
-philo_routine.c \
-helpers.c \
-messages.c \
 get_time.c \
-main.c)
+helpers.c \
+main.c \
+messages.c \
+philo_routine.c \
+messages.c \
+philosophize.c)
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)
