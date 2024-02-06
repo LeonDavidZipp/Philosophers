@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 14:14:35 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 21:01:15 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut);
 static bool	philo_eat(t_philo *philo, pthread_mutex_t *p_mut);
 static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut);
-static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut);
+static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut,
+				pthread_mutex_t *death_mut);
 
 bool	philo_routine(t_routine *routine)
 {
@@ -35,6 +36,7 @@ bool	philo_routine(t_routine *routine)
 		if (routine->philo->must_eat_cnt > 0)
 			routine->philo->must_eat_cnt--;
 	}
+	routine
 	return (is_alive);
 }
 
@@ -93,9 +95,12 @@ static bool	philo_sleep(t_philo *philo, pthread_mutex_t *p_mut)
 	return (check_alive(philo, -1, p_mut));
 }
 
-static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut)
+static void	philo_death(t_philo *philo, pthread_mutex_t *p_mut,
+	pthread_mutex_t *death_mut)
 {
 	death_message(get_time(), philo->id, p_mut);
+	pthread_mutex_lock(death_mut);
+	
 }
 
 static bool	check_alive(t_philo *philo, long long time, pthread_mutex_t *p_mut)
