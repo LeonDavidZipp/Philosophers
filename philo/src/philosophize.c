@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 22:02:53 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/06 22:09:25 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	philosophize(t_data *data, t_philo **philos,
 
 	pthread_mutex_init(&p_mut, NULL);
 	routines = (t_routine *)ft_calloc(data->philo_cnt + 1, sizeof(t_routine));
-	i = -1;
-	if (start_threads(data, philos, routines, &p_mut))
+	if (!routines || start_threads(data, philos, routines, &p_mut))
 	{
 		printf("\033[0;31mError: malloc failed\033[0m\n");
 		ft_free_2d_arr((void **)philos);
 		ft_free_2d_mutex_arr(forks);
+		free(routines);
 		free(data);
 		exit(1);
 	}
