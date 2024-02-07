@@ -6,30 +6,30 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/06 12:49:43 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/07 13:12:29 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
 CC := cc
-CFLAGS = -Wextra -Wall -Werror -pthread
+CFLAGS := -Wextra -Wall -Werror
 
-SOURCES = $(addprefix src/, \
+SOURCES := $(addprefix src/, \
 create_data.c \
 create_forks.c \
 create_philos.c \
-philo_routine.c \
 helpers.c \
+main.c \
 messages.c \
-get_time.c \
-main.c)
-OBJECTS = $(SOURCES:.c=.o)
+philo_routine.c \
+philosophize.c)
+OBJECTS := $(SOURCES:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar -rc $(NAME) $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(NAME)
 
 clean:
 	rm -f $(OBJECTS)
