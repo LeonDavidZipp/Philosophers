@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 11:28:52 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:05:03 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	philo_eat(t_routine *r)
 	}
 	eat_message(r->philo->ms_last_ate_at, r->philo->id, r->p_mut);
 	r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
-	usleep(r->philo->ms_to_eat);
+	ft_usleep(r->philo->ms_to_eat);
 	pthread_mutex_unlock(r->philo->left_fork);
 	pthread_mutex_unlock(r->philo->right_fork);
 }
@@ -73,7 +73,7 @@ static void	philo_eat(t_routine *r)
 static void	philo_sleep(t_routine *r)
 {
 	sleep_message(get_time(), r->philo->id, r->p_mut);
-	usleep(r->philo->ms_to_sleep);
+	ft_usleep(r->philo->ms_to_sleep);
 	check_alive(r, get_time());
 }
 

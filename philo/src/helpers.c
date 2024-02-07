@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:54:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/04 23:11:12 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:11:53 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_free_2d_arr(void **arr)
 
 void	ft_free_2d_mutex_arr(pthread_mutex_t **arr)
 {
-	int	i;
+	int			i;
 
 	i = -1;
 	while (arr[++i])
@@ -56,4 +56,23 @@ void	ft_free_2d_mutex_arr(pthread_mutex_t **arr)
 		free(arr[i]);
 	}
 	free(arr);
+}
+
+long long	get_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
+}
+
+int	ft_usleep(long long ms)
+{
+	long long	start;
+
+	start = get_time();
+	while ((get_time() - start) < ms)
+		usleep(500);
+	return (0);
 }

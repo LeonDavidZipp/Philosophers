@@ -6,7 +6,7 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/06 23:21:27 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/07 13:12:29 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SOURCES := $(addprefix src/, \
 create_data.c \
 create_forks.c \
 create_philos.c \
-get_time.c \
 helpers.c \
 main.c \
 messages.c \

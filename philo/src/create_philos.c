@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:38:38 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 12:39:28 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:05:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks)
 		philos[i]->left_fork = forks[i];
 		philos[i]->right_fork = forks[(i + 1) % data->philo_cnt];
 	}
+}
+
+int	ft_usleep(size_t ms)
+{
+	size_t	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < ms)
+		usleep(500);
+	return (0);
 }
