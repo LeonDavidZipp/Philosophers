@@ -6,14 +6,14 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 23:11:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 12:39:19 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 static int	start_threads(t_data *data, t_philo **philos,
-	t_routine *routines, pthread_mutex_t *p_mut);
+				t_routine *routines, pthread_mutex_t *p_mut);
 
 void	philosophize(t_data *data, t_philo **philos,
 	pthread_mutex_t **forks)
@@ -58,8 +58,8 @@ static int	start_threads(t_data *data, t_philo **philos,
 		routines[i].p_mut = p_mut;
 		routines[i].some_died = &data->some_died;
 		routines[i].death_mut = death_mut;
-		pthread_create(philos[i]->thread, NULL, philo_routine, (void *)&routines[i]);
-		// pthread_create(philos[i]->thread, NULL, philo_routine, (void *)&routines[i]);
+		pthread_create(philos[i]->thread, NULL, philo_routine,
+			(void *)&routines[i]);
 	}
 	return (0);
 }
