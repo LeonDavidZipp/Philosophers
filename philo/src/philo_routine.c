@@ -6,16 +6,11 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 18:29:36 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 19:03:12 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-static bool	check_alive(t_routine *r, long long time);
-static void	philo_eat(t_routine *r);
-static void	philo_sleep(t_routine *r);
-static void	philo_death(t_routine *r);
 
 void	*philo_routine(void *r_void)
 {
@@ -45,8 +40,10 @@ void	*philo_routine(void *r_void)
 	return (NULL);
 }
 
-static bool	check_alive(t_routine *r, long long time)
+bool	check_alive(t_routine *r, long long time)
 {
+	if (*r->some_died == true)
+		return (true);
 	if (time - r->philo->ms_last_ate_at > r->philo->ms_to_die)
 	{
 		philo_death(r);
