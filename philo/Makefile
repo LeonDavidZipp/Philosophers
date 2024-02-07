@@ -6,27 +6,24 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/07 14:18:07 by lzipp            ###   ########.fr        #
+#    Updated: 2024/02/07 15:29:36 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
 CC := cc
-CFLAGS := -Wextra -Wall -Werror
-# DBFLAGS := $(CFLAGS) -fsanitize=address
+CFLAGS := -Wextra -Wall -Werror -pthread
 
 SOURCES := $(addprefix src/, create_data.c create_forks.c create_philos.c \
-helpers.c main.c messages.c philo_routine.c philosophize.c)
+free_functions.c helpers.c main.c messages.c philo_routine.c philosophize.c)
 OBJECTS := $(SOURCES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(SOURCES)
-	$(CC) $(CFLAGS) $(SOURCES) -o $(NAME)
-	
-# memcheck: $(SOURCES)
-# 	$(CC) $(DBFLAGS) $(SOURCES) -o $(NAME)
+$(NAME): $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+# $(CC) $(OBJECTS) -o $(NAME)
 
 clean:
 	rm -f $(OBJECTS)
