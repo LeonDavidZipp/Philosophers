@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:48:08 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:05:03 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 14:26:01 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 	forks = create_forks(data);
 	philos = create_philos(data, forks);
 	philosophize(data, philos, forks);
+	free_resources(data, philos, forks);
 	return (0);
 }
 

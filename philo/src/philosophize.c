@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 12:39:19 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 14:18:48 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	philosophize(t_data *data, t_philo **philos,
 	while (++i < data->philo_cnt)
 		pthread_join(*philos[i]->thread, NULL);
 	pthread_mutex_destroy(&p_mut);
+	free(routines);
 }
 
 static int	start_threads(t_data *data, t_philo **philos,
