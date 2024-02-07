@@ -2,9 +2,9 @@ version: '3'
 
 services:
   leaktester:
-    # image: karek/valgrind
-    image: valgrind42/debian_flask_pedashboard
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    build: .
     volumes:
-      - ./philo:/philo
-      - ./philo_bonus:/philo_bonus
+      - ./philo:/valgrind/philo
+      - ./philo_bonus:/valgrind/philo_bonus
+    stdin_open: true
+    tty: true
