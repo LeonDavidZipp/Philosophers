@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   messages.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 14:16:33 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 01:15:52 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	fork_message(long long ms, int id, pthread_mutex_t *p_mut)
 {
 	pthread_mutex_lock(p_mut);
-	printf("\033[0;34m");
+	printf("\033[0;36m");
 	printf("%lld %d has taken a fork", ms, id);
 	printf("\033[0m\n");
 	pthread_mutex_unlock(p_mut);
@@ -33,7 +33,7 @@ void	eat_message(long long ms, int id, pthread_mutex_t *p_mut)
 void	sleep_message(long long ms, int id, pthread_mutex_t *p_mut)
 {
 	pthread_mutex_lock(p_mut);
-	printf("\033[0;34m");
+	printf("\033[0;33m");
 	printf("%lld %d is sleeping", ms, id);
 	printf("\033[0m\n");
 	pthread_mutex_unlock(p_mut);
