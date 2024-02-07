@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:54:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:11:53 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 14:19:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,6 @@ void	*ft_calloc(size_t count, size_t size)
 		total--;
 	}
 	return (ptr);
-}
-
-void	ft_free_2d_arr(void **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free(arr);
-}
-
-void	ft_free_2d_mutex_arr(pthread_mutex_t **arr)
-{
-	int			i;
-
-	i = -1;
-	while (arr[++i])
-	{
-		pthread_mutex_destroy(arr[i]);
-		free(arr[i]);
-	}
-	free(arr);
 }
 
 long long	get_time(void)

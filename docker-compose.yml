@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  leaktester:
+    build: .
+    volumes:
+      - ./philo:/valgrind/philo
+      - ./philo_bonus:/valgrind/philo_bonus
+    stdin_open: true
+    tty: true

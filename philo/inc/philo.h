@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:15:16 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 15:22:49 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
 void			*ft_calloc(size_t count, size_t size);
 void			ft_free_2d_arr(void **arr);
 void			ft_free_2d_mutex_arr(pthread_mutex_t **arr);
+void			free_resources(t_data *data, t_philo **philos,
+					pthread_mutex_t **forks);
 
 #endif
