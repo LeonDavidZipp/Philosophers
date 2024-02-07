@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   messages.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 01:15:52 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:17:54 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	eat_message(long long ms, int id, pthread_mutex_t *p_mut)
 void	sleep_message(long long ms, int id, pthread_mutex_t *p_mut)
 {
 	pthread_mutex_lock(p_mut);
-	printf("\033[0;33m");
+	printf("\033[0;35m");
 	printf("%lld %d is sleeping", ms, id);
 	printf("\033[0m\n");
 	pthread_mutex_unlock(p_mut);
