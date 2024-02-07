@@ -6,13 +6,13 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 18:07:46 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 18:29:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static void	check_alive(t_routine *r, long long time);
+static bool	check_alive(t_routine *r, long long time);
 static void	philo_eat(t_routine *r);
 static void	philo_sleep(t_routine *r);
 static void	philo_death(t_routine *r);
@@ -43,54 +43,6 @@ void	*philo_routine(void *r_void)
 			r->philo->must_eat_cnt--;
 	}
 	return (NULL);
-}
-
-static void	philo_eat(t_routine *r)
-{
-	long long	ms_new_ate_at;
-
-	ms_new_ate_at = get_time();
-	check_alive(r, ms_new_ate_at);
-	if (*r->some_died)
-		return ;
-	if (r->philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(r->philo->left_fork);
-		fork_message(get_time(), r->philo->id, r->p_mut);
-		pthread_mutex_lock(r->philo->right_fork);
-		fork_message(get_time(), r->philo->id, r->p_mut);
-	}
-	else
-	{
-		pthread_mutex_lock(r->philo->right_fork);
-		fork_message(get_time(), r->philo->id, r->p_mut);
-		pthread_mutex_lock(r->philo->left_fork);
-		fork_message(get_time(), r->philo->id, r->p_mut);
-	}
-	eat_message(r->philo->ms_last_ate_at, r->philo->id, r->p_mut);
-	r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
-	ft_usleep(r->philo->ms_to_eat);
-	pthread_mutex_unlock(r->philo->left_fork);
-	pthread_mutex_unlock(r->philo->right_fork);
-}
-
-static void	philo_sleep(t_routine *r)
-{
-	if (*r->some_died)
-		return ;
-	sleep_message(get_time(), r->philo->id, r->p_mut);
-	ft_usleep(r->philo->ms_to_sleep);
-	check_alive(r, get_time());
-}
-
-static void	philo_death(t_routine *r)
-{
-	if (*r->some_died)
-		return ;
-	death_message(get_time(), r->philo->id, r->p_mut);
-	pthread_mutex_lock(r->death_mut);
-	*r->some_died = true;
-	pthread_mutex_unlock(r->death_mut);
 }
 
 static bool	check_alive(t_routine *r, long long time)
