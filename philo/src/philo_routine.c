@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 01:07:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:28:52 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ static void	philo_eat(t_routine *r)
 {
 	long long	ms_new_ate_at;
 
+	ms_new_ate_at = get_time();
+	check_alive(r, ms_new_ate_at);
+	if (*r->some_died)
+		return ;
 	if (r->philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(r->philo->left_fork);
@@ -59,8 +63,6 @@ static void	philo_eat(t_routine *r)
 		pthread_mutex_lock(r->philo->left_fork);
 		fork_message(get_time(), r->philo->id, r->p_mut);
 	}
-	ms_new_ate_at = get_time();
-	check_alive(r, ms_new_ate_at);
 	eat_message(r->philo->ms_last_ate_at, r->philo->id, r->p_mut);
 	r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
 	usleep(r->philo->ms_to_eat);
