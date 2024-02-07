@@ -6,25 +6,21 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/06 21:31:46 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:12:13 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 static int		ft_atoi(const char *str);
+static void		check_valid(int argc, char **argv);
 static void		fill_data(t_data *data, int argc, char **argv);
 
 t_data	*create_data(int argc, char **argv)
 {
 	t_data	*data;
 
-	if (argc != 5 && argc != 6)
-	{
-		printf("\033[0;31mUsage: ./philo nr_of_philos t_to_die t_to_eat");
-		printf(" t_to_sleep [nr_must_eat]\033[0m\n");
-		exit(1);
-	}
+	check_valid(argc, argv);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 	{
@@ -83,4 +79,30 @@ static int	ft_atoi(const char *str)
 		i++;
 	}
 	return ((result * sign));
+}
+
+static void	check_valid(int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	if (argc != 5 && argc != 6)
+	{
+		printf("\033[0;31mUsage: ./philo nr_of_philos t_to_die t_to_eat");
+		printf(" t_to_sleep [nr_must_eat]\033[0m\n");
+		exit(1);
+	}
+	i = 0;
+	while (++i < argc)
+	{
+		j = -1;
+		while (argv[i][++j])
+		{
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
+			{
+				printf("\033[0;31mError: invalid arguments\033[0m\n");
+				exit(1);
+			}
+		}
+	}
 }
