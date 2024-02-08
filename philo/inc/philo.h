@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 12:15:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 13:01:01 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_routine
 {
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
-	bool					*some_died;
 	pthread_mutex_t			*death_mut;
+	bool					*some_died;
 }				t_routine;
 
 // creating data, forks, philos
@@ -77,11 +77,11 @@ long long		get_time(void);
 int				ft_usleep(long long ms);
 
 // messages
-void			fork_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			eat_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			sleep_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			think_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			fork_message(long long ms, t_routine *r);
+void			eat_message(long long ms, t_routine *r);
+void			sleep_message(long long ms, t_routine *r);
+void			think_message(long long ms, t_routine *r);
+void			death_message(long long ms, t_routine *r);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
