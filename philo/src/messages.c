@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 12:59:55 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:18:16 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	death_message(long long ms, t_routine *r)
 {
 	bool	some_died;
 
-	pthread_mutex_lock(r->death_mut);
+	// pthread_mutex_lock(r->death_mut);
 	some_died = *r->some_died;
-	pthread_mutex_unlock(r->death_mut);
+	// pthread_mutex_unlock(r->death_mut);
 	if (some_died)
 		return ;
 	pthread_mutex_lock(r->p_mut);

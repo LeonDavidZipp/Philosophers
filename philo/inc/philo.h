@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 13:01:01 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:23:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_routine
 	pthread_mutex_t			*p_mut;
 	pthread_mutex_t			*death_mut;
 	bool					*some_died;
+	long long				start_time;
 }				t_routine;
 
 // creating data, forks, philos
