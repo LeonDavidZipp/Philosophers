@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 14:23:36 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 17:06:39 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ void			philosophize(t_data *data, t_philo **philos,
 // philo_routine
 void			*philo_routine(void *r_void);
 // bool			check_alive(t_routine *r, long long time);
-
-// philo_actions
-// void	philo_eat(t_routine *r);
-// bool	philo_sleep(t_routine *r);
-// void	philo_death(t_routine *r);
 
 // time
 long long		get_time(void);
