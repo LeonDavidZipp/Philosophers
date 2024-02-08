@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 14:26:00 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 15:02:28 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*philo_routine(void *r_void)
 		think_message(get_time() - r->start_time, r);
 		if (*r->some_died)
 			break ;
+		check_alive(r, get_time());
 		philo_eat(r);
 		if (*r->some_died)
 			break ;
@@ -61,12 +62,12 @@ static void	philo_eat(t_routine *r)
 	else
 	{
 		pthread_mutex_lock(r->philo->right_fork);
-		fork_message(get_time()- r->start_time, r);
+		fork_message(get_time() - r->start_time, r);
 		pthread_mutex_lock(r->philo->left_fork);
-		fork_message(get_time()- r->start_time, r);
+		fork_message(get_time() - r->start_time, r);
 	}
-	eat_message(r->philo->ms_last_ate_at - r->start_time, r);
 	r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
+	eat_message(get_time() - r->start_time, r);
 	ft_usleep(r->philo->ms_to_eat);
 	pthread_mutex_unlock(r->philo->left_fork);
 	pthread_mutex_unlock(r->philo->right_fork);
@@ -74,27 +75,30 @@ static void	philo_eat(t_routine *r)
 
 static void	philo_sleep(t_routine *r)
 {
-	sleep_message(get_time()- r->start_time, r);
+	sleep_message(get_time() - r->start_time, r);
 	ft_usleep(r->philo->ms_to_sleep);
 	check_alive(r, get_time());
 }
 
 static void	philo_death(t_routine *r)
 {
-	pthread_mutex_lock(r->death_mut);
-	death_message(get_time()- r->start_time, r);
+	// pthread_mutex_lock(r->death_mut);
+	death_message(get_time() - r->start_time, r);
 	*r->some_died = true;
-	pthread_mutex_unlock(r->death_mut);
+	// pthread_mutex_unlock(r->death_mut);
 }
 
 static bool	check_alive(t_routine *r, long long time)
 {
+	pthread_mutex_lock(r->death_mut);
 	if (time - r->philo->ms_last_ate_at > r->philo->ms_to_die)
 	{
 		philo_death(r);
+		pthread_mutex_unlock(r->death_mut);
 		return (false);
 	}
 	if (time > 0)
 		r->philo->ms_last_ate_at = time;
+	pthread_mutex_unlock(r->death_mut);
 	return (true);
 }

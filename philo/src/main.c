@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:48:08 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 14:26:01 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:59:43 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 static void	handle_one_philo(t_data *data)
 {
 	ft_usleep(data->ms_to_die);
-	printf("\033[0;31m%lld 1 died", data->start_time + data->ms_to_die);
+	printf("\033[0;31m%lld 1 died", data->ms_to_die);
 	printf("\033[0m\n");
 	free(data);
 	exit(0);
