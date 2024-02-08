@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 16:01:48 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:23:20 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	start_threads(t_data *data, t_philo **philos,
 		routines[i].p_mut = p_mut;
 		routines[i].some_died = &data->some_died;
 		routines[i].death_mut = death_mut;
+		routines[i].start_time = data->start_time;
 		pthread_create(philos[i]->thread, NULL, philo_routine,
 			(void *)&routines[i]);
 	}

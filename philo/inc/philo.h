@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 19:02:53 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:23:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef struct s_routine
 {
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
-	bool					*some_died;
 	pthread_mutex_t			*death_mut;
+	bool					*some_died;
+	long long				start_time;
 }				t_routine;
 
 // creating data, forks, philos
@@ -65,23 +66,23 @@ void			philosophize(t_data *data, t_philo **philos,
 
 // philo_routine
 void			*philo_routine(void *r_void);
-bool			check_alive(t_routine *r, long long time);
+// bool			check_alive(t_routine *r, long long time);
 
 // philo_actions
-void	philo_eat(t_routine *r);
-bool	philo_sleep(t_routine *r);
-void	philo_death(t_routine *r);
+// void	philo_eat(t_routine *r);
+// bool	philo_sleep(t_routine *r);
+// void	philo_death(t_routine *r);
 
 // time
 long long		get_time(void);
 int				ft_usleep(long long ms);
 
 // messages
-void			fork_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			eat_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			sleep_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			think_message(long long ms, int id, pthread_mutex_t *p_mut);
-void			death_message(long long ms, int id, pthread_mutex_t *p_mut);
+void			fork_message(long long ms, t_routine *r);
+void			eat_message(long long ms, t_routine *r);
+void			sleep_message(long long ms, t_routine *r);
+void			think_message(long long ms, t_routine *r);
+void			death_message(long long ms, t_routine *r);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);

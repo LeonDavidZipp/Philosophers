@@ -6,53 +6,88 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:17:54 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 15:04:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	fork_message(long long ms, int id, pthread_mutex_t *p_mut)
+void	fork_message(long long ms, t_routine *r)
 {
-	pthread_mutex_lock(p_mut);
+	bool	some_died;
+
+	pthread_mutex_lock(r->death_mut);
+	some_died = *r->some_died;
+	pthread_mutex_unlock(r->death_mut);
+	if (some_died)
+		return ;
+	pthread_mutex_lock(r->p_mut);
 	printf("\033[0;36m");
-	printf("%lld %d has taken a fork", ms, id);
+	printf("%lld %d has taken a fork", ms, r->philo->id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
+	pthread_mutex_unlock(r->p_mut);
 }
 
-void	eat_message(long long ms, int id, pthread_mutex_t *p_mut)
+void	eat_message(long long ms, t_routine *r)
 {
-	pthread_mutex_lock(p_mut);
+	bool	some_died;
+
+	pthread_mutex_lock(r->death_mut);
+	some_died = *r->some_died;
+	pthread_mutex_unlock(r->death_mut);
+	if (some_died)
+		return ;
+	pthread_mutex_lock(r->p_mut);
 	printf("\033[0;32m");
-	printf("%lld %d is eating", ms, id);
+	printf("%lld %d is eating", ms, r->philo->id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
+	pthread_mutex_unlock(r->p_mut);
 }
 
-void	sleep_message(long long ms, int id, pthread_mutex_t *p_mut)
+void	sleep_message(long long ms, t_routine *r)
 {
-	pthread_mutex_lock(p_mut);
+	bool	some_died;
+
+	pthread_mutex_lock(r->death_mut);
+	some_died = *r->some_died;
+	pthread_mutex_unlock(r->death_mut);
+	if (some_died)
+		return ;
+	pthread_mutex_lock(r->p_mut);
 	printf("\033[0;35m");
-	printf("%lld %d is sleeping", ms, id);
+	printf("%lld %d is sleeping", ms, r->philo->id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
+	pthread_mutex_unlock(r->p_mut);
 }
 
-void	think_message(long long ms, int id, pthread_mutex_t *p_mut)
+void	think_message(long long ms, t_routine *r)
 {
-	pthread_mutex_lock(p_mut);
-	printf("\033[0;34m");
-	printf("%lld %d is thinking", ms, id);
+	bool	some_died;
+
+	pthread_mutex_lock(r->death_mut);
+	some_died = *r->some_died;
+	pthread_mutex_unlock(r->death_mut);
+	if (some_died)
+		return ;
+	pthread_mutex_lock(r->p_mut);
+	printf("\033[0;33m");
+	printf("%lld %d is thinking", ms, r->philo->id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
+	pthread_mutex_unlock(r->p_mut);
 }
 
-void	death_message(long long ms, int id, pthread_mutex_t *p_mut)
+void	death_message(long long ms, t_routine *r)
 {
-	pthread_mutex_lock(p_mut);
+	bool	some_died;
+
+	// pthread_mutex_lock(r->death_mut);
+	some_died = *r->some_died;
+	// pthread_mutex_unlock(r->death_mut);
+	if (some_died)
+		return ;
+	pthread_mutex_lock(r->p_mut);
 	printf("\033[0;31m");
-	printf("%lld %d died", ms, id);
+	printf("%lld %d died", ms, r->philo->id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
+	pthread_mutex_unlock(r->p_mut);
 }
