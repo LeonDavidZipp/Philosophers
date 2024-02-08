@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:17:54 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/08 12:09:10 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ void	death_message(long long ms, int id, pthread_mutex_t *p_mut)
 	printf("\033[0;31m");
 	printf("%lld %d died", ms, id);
 	printf("\033[0m\n");
-	pthread_mutex_unlock(p_mut);
 }
