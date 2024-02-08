@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 19:03:12 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/07 23:48:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	*philo_routine(void *r_void)
 {
 	t_routine	*r;
-	bool		is_alive;
+	// bool		is_alive;
 
-	is_alive = true;
+	// is_alive = true;
 	r = (t_routine *)r_void;
 	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
 		&& *r->some_died == false)
 	{
-		is_alive = check_alive(r, get_time());
+		check_alive(r, get_time());
 		if (*r->some_died)
 			break ;
 		think_message(get_time(), r->philo->id, r->p_mut);
