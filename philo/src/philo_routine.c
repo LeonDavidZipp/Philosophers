@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 16:24:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/09 16:28:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,25 @@ static bool	check_alive(t_routine *r, long long time);
 void	*philo_routine(void *r_void)
 {
 	t_routine	*r;
-	bool		is_alive;
 
 	r = (t_routine *)r_void;
 	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
 		&& *r->some_died == false)
 	{
-		is_alive = check_alive(r, get_time());
-		if (*r->some_died)
-		{
-			if (!is_alive)
-				philo_death(r, time);
+		if (!check_alive(r, get_time()))
 			break ;
-		}
 		think_message(get_time() - r->start_time, r);
-		is_alive = check_alive(r, get_time());
-		if (*r->some_died)
-		{
-			if (!is_alive)
-				philo_death(r, time);
+		if (!check_alive(r, get_time()))
 			break ;
-		}
 		philo_eat(r);
-		is_alive = check_alive(r, get_time());
-		if (*r->some_died)
-		{
-			if (!is_alive)
-				philo_death(r, time);
+		if (!check_alive(r, get_time()))
 			break ;
-		}
 		philo_sleep(r);
 		if (r->philo->must_eat_cnt > 0)
 			r->philo->must_eat_cnt--;
 	}
 	return (NULL);
 }
-
 
 static void	philo_eat(t_routine *r)
 {
@@ -126,7 +109,8 @@ static bool	check_alive(t_routine *r, long long time)
 	pthread_mutex_lock(r->death_mut);
 	if (time - r->philo->ms_last_ate_at > r->philo->ms_to_die)
 	{
-		philo_death(r, time);
+		if (*r->some_died == false)
+			philo_death(r, time);
 		pthread_mutex_unlock(r->death_mut);
 		return (false);
 	}
