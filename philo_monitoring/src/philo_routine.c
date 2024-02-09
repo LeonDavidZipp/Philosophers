@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 18:01:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/09 17:59:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ static void	philo_sleep(t_routine *r)
 
 static void	philo_death(t_routine *r, long long time)
 {
-	pthread_mutex_lock(r->death_mut);
+	death_message(time - r->start_time, r);
 	*r->some_died = true;
-	pthread_mutex_unlock(r->death_mut);
 }
 
 static bool	check_alive(t_routine *r, long long time)
