@@ -6,15 +6,15 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:38:38 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 15:49:37 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:36:58 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks);
+void	fill_philos(t_philo **philos, t_data *data, t_fork **forks);
 
-t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
+t_philo	**create_philos(t_data *data, t_fork **forks)
 {
 	t_philo			**philos;
 
@@ -23,7 +23,7 @@ t_philo	**create_philos(t_data *data, pthread_mutex_t **forks)
 	return (philos);
 }
 
-void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks)
+void	fill_philos(t_philo **philos, t_data *data, t_fork **forks)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks)
 		{
 			printf("\033[0;31mError: malloc failed\033[0m\n");
 			ft_free_2d_arr((void **)philos);
-			ft_free_2d_mutex_arr(forks);
+			free_forks(forks);
 			free(data);
 			exit(1);
 		}

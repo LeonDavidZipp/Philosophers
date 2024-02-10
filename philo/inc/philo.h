@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:28:02 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:39:57 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_data
 // 	pthread_t				*thread;
 // }				t_philo;
 
+typedef struct s_fork
+{
+	int						id;
+	bool					is_taken;
+	pthread_mutex_t			*mutex;
+}				t_fork;
+
 typedef struct s_philo
 {
 	int						id;
@@ -60,29 +67,22 @@ typedef struct s_philo
 	pthread_t				*thread;
 }				t_philo;
 
-typedef struct s_fork
-{
-	int						id;
-	bool					is_taken;
-	pthread_mutex_t			*mutex;
-}				t_fork;
-
 typedef struct s_routine
 {
+	long long				start_time;
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
 	pthread_mutex_t			*death_mut;
 	bool					*some_died;
-	long long				start_time;
 }				t_routine;
 
 // creating data, forks, philos
 t_data			*create_data(int argc, char **argv);
-pthread_mutex_t	**create_forks(t_data *data);
-t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
+t_fork			**create_forks(t_data *data);
+t_philo			**create_philos(t_data *data, t_fork **forks);
 
 // philosophize
-void			philosophize(t_philo **philos, pthread_mutex_t **forks);
+void			philosophize(t_philo **philos, t_fork **forks);
 
 // philo_routine
 void			*philo_routine(void *r_void);

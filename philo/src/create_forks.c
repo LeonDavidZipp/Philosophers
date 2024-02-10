@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:46:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 15:48:52 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:32:17 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	handle_fork_error(t_fork **forks, t_data *data);
 
-pthread_mutex_t	**create_forks(t_data *data)
+t_fork	**create_forks(t_data *data)
 {
 	t_fork			**forks;
 	int				i;
