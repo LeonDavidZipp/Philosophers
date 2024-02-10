@@ -6,12 +6,14 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 14:16:54 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:30:37 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+static void	send_data(t_philo *philo, long long ms, int act,
+				t_monitor_data *data);
 static void	philo_eat(t_philo *philo);
 static void	philo_sleep(t_philo *philo);
 static bool	check_alive(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 14:17:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:29:49 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ void			*philo_routine(void *r_void);
 // time
 long long		get_time(void);
 int				ft_usleep(long long ms);
-
-// messages
-void			fork_message(long long ms, t_routine *r);
-void			eat_message(long long ms, t_routine *r);
-void			sleep_message(long long ms, t_routine *r);
-void			think_message(long long ms, t_routine *r);
-void			death_message(long long ms, t_routine *r);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
