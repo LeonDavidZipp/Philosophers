@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:13:12 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:14:39 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,6 @@ void			philosophize(t_philo **philos, pthread_mutex_t **forks);
 void			*philo_routine(void *r_void);
 // bool			check_alive(t_routine *r, long long time);
 
-// time
-long long		get_time(void);
-int				ft_usleep(long long ms);
-
 // messages
 void			fork_message(long long ms, t_routine *r);
 void			eat_message(long long ms, t_routine *r);
@@ -101,13 +97,15 @@ void			death_message(long long ms, t_routine *r);
 
 // free functions
 void			ft_free_2d_arr(void **arr);
-void			free_resources(t_philo **philos, t_fork **forks);
 void			free_forks(t_fork **forks);
 void			free_philos(t_philo **philos);
+void			free_resources(t_philo **philos, t_fork **forks);
 
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
 int				ft_null_terminated_arr_len(void **arr);
+int				ft_usleep(long long ms);
+long long		get_time(void);
 
 #endif

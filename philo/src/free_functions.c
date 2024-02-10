@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:39 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:11:07 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:14:00 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_philos(t_philo **philos)
 	free(philos);
 }
 
-void	free_resources(t_data *data, t_philo **philos, pthread_mutex_t **forks)
+void	free_resources(t_philo **philos, pthread_mutex_t **forks)
 {
 	free_philos(philos);
 	free_forks(forks);
