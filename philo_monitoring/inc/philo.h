@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 14:17:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:02:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,19 @@ typedef struct s_philo
 	long long				ms_to_eat;
 	long long				ms_last_ate_at;
 	long long				must_eat_cnt;
-	pthread_mutex_t			*left_fork;
-	pthread_mutex_t			*right_fork;
+	t_fork					*left_fork;
+	t_fork					*right_fork;
 	pthread_mutex_t			*send_mutex;
 	t_monitor_data			*monitor_data;
 	pthread_t				*thread;
 }				t_philo;
+
+typedef struct s_fork
+{
+	int						id;
+	bool					is_taken;
+	pthread_mutex_t			*mutex;
+}				t_fork;
 
 // creating data, forks, philos
 t_data			*create_data(int argc, char **argv);
@@ -69,23 +76,16 @@ void			philosophize(t_data *data, t_philo **philos,
 
 // philo_routine
 void			*philo_routine(void *r_void);
-// bool			check_alive(t_routine *r, long long time);
 
 // time
 long long		get_time(void);
 int				ft_usleep(long long ms);
 
-// messages
-void			fork_message(long long ms, t_routine *r);
-void			eat_message(long long ms, t_routine *r);
-void			sleep_message(long long ms, t_routine *r);
-void			think_message(long long ms, t_routine *r);
-void			death_message(long long ms, t_routine *r);
-
 // helpers
 void			*ft_calloc(size_t count, size_t size);
 void			ft_free_2d_arr(void **arr);
 void			ft_free_2d_mutex_arr(pthread_mutex_t **arr);
+void			free_forks(t_fork **forks);
 void			free_resources(t_data *data, t_philo **philos,
 					pthread_mutex_t **forks);
 

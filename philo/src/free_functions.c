@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:39 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 14:28:53 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:37:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ void	ft_free_2d_mutex_arr(pthread_mutex_t **arr)
 	free(arr);
 }
 
+void	free_forks(t_fork **forks)
+{
+	int	i;
+
+	i = -1;
+	while (forks[++i])
+	{
+		pthread_mutex_destroy(forks[i]->mutex);
+		free(forks[i]->mutex);
+		free(forks[i]);
+	}
+	free(forks);
+}
+
 void	free_philos(t_philo **philos)
 {
 	int	i;
@@ -48,9 +62,8 @@ void	free_philos(t_philo **philos)
 	free(philos);
 }
 
-void	free_resources(t_data *data, t_philo **philos, pthread_mutex_t **forks)
+void	free_resources(t_philo **philos, t_fork **forks)
 {
 	free_philos(philos);
-	ft_free_2d_mutex_arr(forks);
-	free(data);
+	free_forks(forks);
 }

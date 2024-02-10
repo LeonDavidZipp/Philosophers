@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:54:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 17:29:35 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:03:38 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ void	*ft_calloc(size_t count, size_t size)
 		total--;
 	}
 	return (ptr);
+}
+
+int	ft_null_terminated_arr_len(void **arr)
+{
+	int	len;
+
+	len = 0;
+	while (arr[len])
+		len++;
+	return (len);
 }
 
 long long	get_time(void)
