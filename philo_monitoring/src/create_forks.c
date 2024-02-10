@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:46:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 15:08:19 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:33:39 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ pthread_mutex_t	**create_forks(t_data *data)
 static void	handle_fork_error(t_fork **forks, t_data *data)
 {
 	printf("\033[0;31mError: malloc failed\033[0m\n");
-	ft_free_2d_mutex_arr((pthread_mutex_t **)forks);
+	free_forks(forks);
 	free(data);
 	exit(1);
 }
