@@ -6,14 +6,14 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 17:10:47 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 18:17:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static int	start_threads(int philo_cnt, t_philo **philos,
-				t_routine *routines, pthread_mutex_t *p_mut);
+static int	start_threads(t_philo **philos, t_routine *routines,
+				pthread_mutex_t *p_mut, pthread_mutex_t *death_mut);
 
 void	philosophize(t_philo **philos, t_fork **forks)
 {
@@ -21,11 +21,13 @@ void	philosophize(t_philo **philos, t_fork **forks)
 	int					philo_cnt;
 	t_routine			*routines;
 	pthread_mutex_t		p_mut;
+	pthread_mutex_t		death_mut;
 
 	philo_cnt = ft_null_terminated_arr_len((void **)philos);
 	pthread_mutex_init(&p_mut, NULL);
+	pthread_mutex_init(&death_mut, NULL);
 	routines = (t_routine *)ft_calloc(philo_cnt + 1, sizeof(t_routine));
-	if (!routines || start_threads(philo_cnt, philos, routines, &p_mut))
+	if (!routines || start_threads(philos, routines, &p_mut, &death_mut))
 	{
 		printf("\033[0;31mError: malloc failed\033[0m\n");
 		ft_free_2d_arr((void **)philos);
@@ -37,19 +39,17 @@ void	philosophize(t_philo **philos, t_fork **forks)
 	while (++i < philo_cnt)
 		pthread_join(*philos[i]->thread, NULL);
 	pthread_mutex_destroy(&p_mut);
+	pthread_mutex_destroy(&death_mut);
 	free(routines);
 }
 
-static int	start_threads(int philo_cnt, t_philo **philos,
-	t_routine *routines, pthread_mutex_t *p_mut)
+static int	start_threads(t_philo **philos, t_routine *routines,
+				pthread_mutex_t *p_mut, pthread_mutex_t *death_mut)
 {
 	int					i;
-	pthread_mutex_t		*death_mut;
+	int					philo_cnt;
 
-	death_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!death_mut)
-		return (1);
-	pthread_mutex_init(death_mut, NULL);
+	philo_cnt = ft_null_terminated_arr_len((void **)philos);
 	i = -1;
 	while (++i < philo_cnt)
 	{
@@ -72,7 +72,5 @@ static int	start_threads(int philo_cnt, t_philo **philos,
 		printf("philo %d started\n", i + 1);
 		printf("----------------\n");
 	}
-	pthread_mutex_destroy(death_mut);
-	free(death_mut);
 	return (0);
 }
