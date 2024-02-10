@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitoring_thread.c                                :+:      :+:    :+:   */
+/*   monitoring_routine.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:33:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 18:35:16 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:20:17 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	*monitoring_routine(void *r_void)
+void	*monitoring_routine(void *m_data_void)
 {
-	t_routine	*r;
+	t_monitor_data	*m_data;
 
-	r = (t_routine *)r_void;
-	while (*r->some_died == false)
+	m_data = (t_monitor_data *)m_data_void;
+	while (!m_data->some_died)
 	{
-		pthread_mutex_lock(r->death_mut);
-		if (get_time() - r->philo->last_ate_at > r->philo->time_to_die)
-		{
-			philo_death(r, get_time() - r->start_time);
-			*r->some_died = true;
-		}
-		pthread_mutex_unlock(r->death_mut);
+		if (m_data->activity == 0)
+			printf("\033[0;33m%lld %d is thinking\033[0m\n",
+				m_data->ms_time, m_data->id);
+		else if (m_data->activity == 1)
+			printf("\033[0;32m%lld %d is eating\033[0m\n",
+				m_data->ms_time, m_data->id);
+		else if (m_data->activity == 2)
+			printf("\033[0;35m%lld %d is sleeping\033[0m\n",
+				m_data->ms_time, m_data->id);
+		else if (m_data->activity == 3)
+			printf("\033[0;31m%lld %d died\033[0m\n",
+				m_data->ms_time, m_data->id);
+		else if (m_data->activity == 4)
+			printf("\033[0;36m%lld %d has taken a fork\033[0m\n",
+				m_data->ms_time, m_data->id);
 	}
 	return (NULL);
 }

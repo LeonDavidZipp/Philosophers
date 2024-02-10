@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 14:08:13 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:16:54 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ static bool	check_alive(t_philo *philo)
 /// @param id current philo id
 /// @param ms current time in ms
 /// @param activity current activity: 0 - thinking, 1 - eating,
-/// 2 - sleeping, 3 - died, 4 - took a fork
+/// 2 - sleeping, 3 - died, 4 - taken a fork
 void	send_data(t_philo *philo, long long ms, int act, t_monitor_data *data)
 {
 	pthread_mutex_lock(philo->send_mutex);
 	data->id = philo->id;
-	data->ms_time = ms;
+	data->ms_time = ms - philo->ms_start_time;
 	data->activity = act;
 	if (act == 3)
 		data->some_died = true;
