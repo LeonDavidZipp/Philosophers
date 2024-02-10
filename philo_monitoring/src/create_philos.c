@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:38:38 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/07 13:14:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 13:40:32 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ void	fill_philos(t_philo **philos, t_data *data, pthread_mutex_t **forks)
 			exit(1);
 		}
 		philos[i]->id = i + 1;
+		philos[i]->is_dead = false;
 		philos[i]->ms_to_die = data->ms_to_die;
 		philos[i]->ms_to_sleep = data->ms_to_sleep;
 		philos[i]->ms_to_eat = data->ms_to_eat;
-		philos[i]->ms_last_ate_at = data->start_time;
+		philos[i]->ms_start_time = data->ms_start_time;
+		philos[i]->ms_last_ate_at = philos[i]->ms_start_time;
 		philos[i]->must_eat_cnt = data->must_eat_cnt;
 		philos[i]->left_fork = forks[i];
 		philos[i]->right_fork = forks[(i + 1) % data->philo_cnt];

@@ -6,76 +6,77 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 17:59:47 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 13:39:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static void	philo_eat(t_routine *r);
-static void	philo_sleep(t_routine *r);
-static void	philo_death(t_routine *r, long long time);
-static bool	check_alive(t_routine *r, long long time);
+static void	philo_eat(t_philo *philo);
+static void	philo_sleep(t_philo *philo);
+static void	philo_death(t_philo *philo);
+static bool	check_alive(t_philo *philo);
 
-void	*philo_routine(void *r_void)
+void	*philo_routine(void *philo_void)
 {
-	t_routine	*r;
+	t_philo			*philo;
 
-	r = (t_routine *)r_void;
-	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
-		&& *r->some_died == false)
+	philo = (t_philo *)philo_void;
+	while (philo->must_eat_cnt == -1 || philo->must_eat_cnt > 0)
 	{
-		if (!check_alive(r, get_time()))
-			break ;
-		think_message(get_time() - r->start_time, r);
-		if (!check_alive(r, get_time()))
-			break ;
-		philo_eat(r);
-		if (!check_alive(r, get_time()))
-			break ;
-		philo_sleep(r);
-		if (r->philo->must_eat_cnt > 0)
-			r->philo->must_eat_cnt--;
+		check_alive(philo);
+		philo_think(philo);
+		check_alive(philo);
+		philo_eat(philo);
+		check_alive(philo);
+		philo_sleep(philo);
+		if (philo->must_eat_cnt > 0)
+			philo->must_eat_cnt--;
 	}
 	return (NULL);
 }
 
-static void	philo_eat(t_routine *r)
+static void	philo_eat(t_philo *philo)
 {
 	long long	ms_new_ate_at;
 
-	if (r->philo->id % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(r->philo->left_fork);
-		fork_message(get_time() - r->start_time, r);
-		pthread_mutex_lock(r->philo->right_fork);
-		fork_message(get_time() - r->start_time, r);
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->send_mutex);
+		send_data(philo->id, get_time(), 4, philo->monitor_data);
+		pthread_mutex_lock(philo->right_fork);
+		send_data(philo->id, get_time(), 4, philo->monitor_data);
 	}
 	else
 	{
-		pthread_mutex_lock(r->philo->right_fork);
-		fork_message(get_time() - r->start_time, r);
-		pthread_mutex_lock(r->philo->left_fork);
-		fork_message(get_time() - r->start_time, r);
+		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(philo->send_mutex);
+		send_data(philo->id, get_time(), 4, philo->monitor_data);
+		pthread_mutex_lock(philo->left_fork);
+		send_data(philo->id, get_time(), 4, philo->monitor_data);
 	}
 	ms_new_ate_at = get_time();
-	r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
-	eat_message(ms_new_ate_at - r->start_time, r);
-	ft_usleep(r->philo->ms_to_eat);
+	philo->ms_last_ate_at = ms_new_ate_at + philo->ms_to_eat;
+	ft_usleep(philo->ms_to_eat);
 	pthread_mutex_unlock(r->philo->left_fork);
 	pthread_mutex_unlock(r->philo->right_fork);
 }
 
-static void	philo_sleep(t_routine *r)
+static void	philo_sleep(t_philo *philo)
 {
-	sleep_message(get_time() - r->start_time, r);
-	ft_usleep(r->philo->ms_to_sleep);
+	pthread_mutex_lock(philo->send_mutex);
+	send_data(philo->id, get_time(), 2, philo->monitor_data);
+	pthread_mutex_unlock(philo->send_mutex);
+	ft_usleep(philo->ms_to_sleep);
 }
 
-static void	philo_death(t_routine *r, long long time)
+static void	philo_death(t_philo *philo)
 {
-	death_message(time - r->start_time, r);
-	*r->some_died = true;
+	pthread_mutex_lock(philo->send_mutex);
+	send_data(philo->id, get_time(), 3, philo->monitor_data);
+	pthread_mutex_unlock(philo->send_mutex);
+	philo->some_died = true;
 }
 
 static bool	check_alive(t_routine *r, long long time)
@@ -95,4 +96,16 @@ static bool	check_alive(t_routine *r, long long time)
 		r->philo->ms_last_ate_at = time;
 	pthread_mutex_unlock(r->death_mut);
 	return (true);
+}
+
+/// @brief Sends data to the monitoring thread
+/// @param id current philo id
+/// @param ms current time in ms
+/// @param activity current activity: 0 - thinking, 1 - eating,
+/// 2 - sleeping, 3 - died, 4 - took a fork
+void	send_data(int id, long long ms, int activity, t_monitor_data *data)
+{
+	data->id = id;
+	data->ms_time = ms;
+	data->activity = activity;
 }
