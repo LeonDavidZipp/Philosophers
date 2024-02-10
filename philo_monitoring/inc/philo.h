@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 14:29:49 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:00:30 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ typedef struct s_philo
 	pthread_t				*thread;
 }				t_philo;
 
+typedef struct s_fork
+{
+	int						id;
+	bool					is_taken;
+	pthread_mutex_t			*mutex;
+}				t_fork;
+
 // creating data, forks, philos
 t_data			*create_data(int argc, char **argv);
 pthread_mutex_t	**create_forks(t_data *data);
@@ -79,6 +86,7 @@ int				ft_usleep(long long ms);
 void			*ft_calloc(size_t count, size_t size);
 void			ft_free_2d_arr(void **arr);
 void			ft_free_2d_mutex_arr(pthread_mutex_t **arr);
+void			free_forks(t_fork **forks);
 void			free_resources(t_data *data, t_philo **philos,
 					pthread_mutex_t **forks);
 
