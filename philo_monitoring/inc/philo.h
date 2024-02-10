@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 15:00:30 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:02:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_philo
 	long long				ms_to_eat;
 	long long				ms_last_ate_at;
 	long long				must_eat_cnt;
-	pthread_mutex_t			*left_fork;
-	pthread_mutex_t			*right_fork;
+	t_fork					*left_fork;
+	t_fork					*right_fork;
 	pthread_mutex_t			*send_mutex;
 	t_monitor_data			*monitor_data;
 	pthread_t				*thread;
@@ -76,7 +76,6 @@ void			philosophize(t_data *data, t_philo **philos,
 
 // philo_routine
 void			*philo_routine(void *r_void);
-// bool			check_alive(t_routine *r, long long time);
 
 // time
 long long		get_time(void);

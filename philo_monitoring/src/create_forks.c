@@ -6,11 +6,13 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:46:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 15:00:06 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:08:19 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+static void	handle_fork_error(t_fork **forks, t_data *data);
 
 pthread_mutex_t	**create_forks(t_data *data)
 {
@@ -24,23 +26,21 @@ pthread_mutex_t	**create_forks(t_data *data)
 	{
 		forks[i] = (t_fork *)malloc(sizeof(t_fork));
 		if (!forks[i])
-		{
-			printf("\033[0;31mError: malloc failed\033[0m\n");
-			ft_free_2d_mutex_arr(forks);
-			free(data);
-			exit(1);
-		}
+			handle_fork_error(forks, data);
 		forks[i]->id = i + 1;
 		forks[i]->is_taken = false;
 		forks[i]->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (!forks[i]->mutex)
-		{
-			printf("\033[0;31mError: malloc failed\033[0m\n");
-			ft_free_2d_mutex_arr(forks);
-			free(data);
-			exit(1);
-		}
+			handle_fork_error(forks, data);
 		pthread_mutex_init(forks[i]->mutex, NULL);
 	}
 	return (forks);
+}
+
+static void	handle_fork_error(t_fork **forks, t_data *data)
+{
+	printf("\033[0;31mError: malloc failed\033[0m\n");
+	ft_free_2d_mutex_arr((pthread_mutex_t **)forks);
+	free(data);
+	exit(1);
 }
