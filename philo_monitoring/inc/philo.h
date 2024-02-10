@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 13:41:20 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:08:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_philo
 	t_monitor_data			*monitor_data;
 	pthread_t				*thread;
 }				t_philo;
-s
+
 // creating data, forks, philos
 t_data			*create_data(int argc, char **argv);
 pthread_mutex_t	**create_forks(t_data *data);
