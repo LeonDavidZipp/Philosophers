@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:14:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:28:02 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void			ft_free_2d_arr(void **arr);
 void			free_forks(t_fork **forks);
 void			free_philos(t_philo **philos);
 void			free_resources(t_philo **philos, t_fork **forks);
-
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);
