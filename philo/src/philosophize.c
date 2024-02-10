@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:58:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:10:47 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static int	start_threads(int philo_cnt, t_philo **philos,
 	int					i;
 	pthread_mutex_t		*death_mut;
 
-	death_mut = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	pthread_mutex_init(death_mut, NULL);
+	death_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (!death_mut)
 		return (1);
+	pthread_mutex_init(death_mut, NULL);
 	i = -1;
 	while (++i < philo_cnt)
 	{

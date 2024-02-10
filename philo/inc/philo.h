@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/10 16:39:57 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:09:02 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_philo
 	long long				ms_to_sleep;
 	long long				ms_to_eat;
 	long long				ms_last_ate_at;
-	long long				must_eat_cnt;
+	int						must_eat_cnt;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
 	pthread_t				*thread;
