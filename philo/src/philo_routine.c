@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 18:43:29 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 18:45:05 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ static void	philo_take_forks(t_routine *r)
 		fork_message(get_time() - r->ms_start_time, r);
 		pthread_mutex_lock(r->philo->right_fork->mutex);
 		fork_message(get_time() - r->ms_start_time, r);
+		return ;
 	}
-	else
-	{
-		pthread_mutex_lock(r->philo->right_fork->mutex);
-		fork_message(get_time() - r->ms_start_time, r);
-		pthread_mutex_lock(r->philo->left_fork->mutex);
-		fork_message(get_time() - r->ms_start_time, r);
-	}
+	pthread_mutex_lock(r->philo->right_fork->mutex);
+	fork_message(get_time() - r->ms_start_time, r);
+	pthread_mutex_lock(r->philo->left_fork->mutex);
+	fork_message(get_time() - r->ms_start_time, r);
 }
 
 static void	philo_eat(t_routine *r)
