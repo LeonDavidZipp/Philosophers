@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 14:23:20 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:37:12 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	start_threads(t_data *data, t_philo **philos,
 				t_routine *routines, pthread_mutex_t *p_mut);
 
 void	philosophize(t_data *data, t_philo **philos,
-	pthread_mutex_t **forks)
+	t_fork **forks)
 {
 	int					i;
 	t_routine			*routines;
@@ -28,7 +28,7 @@ void	philosophize(t_data *data, t_philo **philos,
 	{
 		printf("\033[0;31mError: malloc failed\033[0m\n");
 		ft_free_2d_arr((void **)philos);
-		ft_free_2d_mutex_arr(forks);
+		free_forks(forks);
 		free(routines);
 		free(data);
 		exit(1);
@@ -60,7 +60,7 @@ static int	start_threads(t_data *data, t_philo **philos,
 		routines[i].p_mut = p_mut;
 		routines[i].some_died = &data->some_died;
 		routines[i].death_mut = death_mut;
-		routines[i].start_time = data->start_time;
+		routines[i].ms_start_time = data->ms_start_time;
 		pthread_create(philos[i]->thread, NULL, philo_routine,
 			(void *)&routines[i]);
 	}

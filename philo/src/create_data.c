@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:12:54 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 16:10:00 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:32:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	fill_data(t_data *data, int argc, char **argv)
 		free(data);
 		exit(1);
 	}
-	data->start_time = get_time();
+	data->ms_start_time = get_time();
 }
 
 static int	ft_atoi(const char *str)

@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 14:24:36 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:36:20 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 	long long				ms_to_eat;
 	int						must_eat_cnt;
 	long long				ms_start_time;
+	bool					some_died;
 }				t_data;
 
 typedef struct s_fork
@@ -56,7 +57,7 @@ typedef struct s_philo
 
 typedef struct s_routine
 {
-	long long				start_time;
+	long long				ms_start_time;
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
 	pthread_mutex_t			*death_mut;
@@ -69,8 +70,7 @@ t_fork			**create_forks(t_data *data);
 t_philo			**create_philos(t_data *data, t_fork **forks);
 
 // philosophize
-void	philosophize(t_data *data, t_philo **philos,
-			pthread_mutex_t **forks)
+void			philosophize(t_data *data, t_philo **philos, t_fork **forks);
 
 // philo_routine
 void			*philo_routine(void *r_void);
