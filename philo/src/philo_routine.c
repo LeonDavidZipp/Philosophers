@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 18:45:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 19:29:33 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	philo_eat(t_routine *r);
 static void	philo_sleep(t_routine *r);
-static boo	philo_take_forks(t_routine *r);
+static bool	philo_take_forks(t_routine *r);
 static bool	check_alive(t_routine *r);
 
 void	*philo_routine(void *r_void)
@@ -27,10 +27,8 @@ void	*philo_routine(void *r_void)
 	{
 		if (!check_alive(r))
 			break ;
-		think_message(get_time() - r->ms_start_time, r);
-		if (!check_alive(r))
-			break ;
-		philo_take_forks(r);
+		if (!philo_take_forks(r))
+			continue ;
 		if (!check_alive(r))
 		{
 			pthread_mutex_unlock(r->philo->left_fork->mutex);
@@ -41,24 +39,43 @@ void	*philo_routine(void *r_void)
 		if (!check_alive(r))
 			break ;
 		philo_sleep(r);
+		if (!check_alive(r))
+			break ;
+		think_message(get_time() - r->ms_start_time, r);
 	}
 	return (NULL);
 }
 
-static void	philo_take_forks(t_routine *r)
+// static bool	philo_take_forks(t_routine *r)
+// {
+// 	if (r->philo->id % 2 == 0)
+// 	{
+// 		pthread_mutex_lock(r->philo->left_fork->mutex);
+// 		fork_message(get_time() - r->ms_start_time, r);
+// 		pthread_mutex_lock(r->philo->right_fork->mutex);
+// 		fork_message(get_time() - r->ms_start_time, r);
+// 		return ;
+// 	}
+// 	pthread_mutex_lock(r->philo->right_fork->mutex);
+// 	fork_message(get_time() - r->ms_start_time, r);
+// 	pthread_mutex_lock(r->philo->left_fork->mutex);
+// 	fork_message(get_time() - r->ms_start_time, r);
+// }
+
+static bool	philo_take_forks(t_routine *r)
 {
-	if (r->philo->id % 2 == 0)
+	if (r->philo->left_fork->is_taken == false
+		&& r->philo->right_fork->is_taken == false)
 	{
 		pthread_mutex_lock(r->philo->left_fork->mutex);
+		r->philo->left_fork->is_taken = true;
 		fork_message(get_time() - r->ms_start_time, r);
 		pthread_mutex_lock(r->philo->right_fork->mutex);
+		r->philo->right_fork->is_taken = true;
 		fork_message(get_time() - r->ms_start_time, r);
-		return ;
+		return (true);
 	}
-	pthread_mutex_lock(r->philo->right_fork->mutex);
-	fork_message(get_time() - r->ms_start_time, r);
-	pthread_mutex_lock(r->philo->left_fork->mutex);
-	fork_message(get_time() - r->ms_start_time, r);
+	return (false);
 }
 
 static void	philo_eat(t_routine *r)
@@ -71,6 +88,8 @@ static void	philo_eat(t_routine *r)
 	if (r->philo->must_eat_cnt > 0)
 		r->philo->must_eat_cnt--;
 	ft_usleep(r->philo->ms_to_eat);
+	r->philo->left_fork->is_taken = false;
+	r->philo->right_fork->is_taken = false;
 	pthread_mutex_unlock(r->philo->left_fork->mutex);
 	pthread_mutex_unlock(r->philo->right_fork->mutex);
 }
