@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/08 17:06:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:24:36 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,48 +29,51 @@ typedef struct s_data
 	long long				ms_to_sleep;
 	long long				ms_to_eat;
 	int						must_eat_cnt;
-	long long				start_time;
-	bool					some_died;
+	long long				ms_start_time;
 }				t_data;
+
+typedef struct s_fork
+{
+	int						id;
+	bool					is_taken;
+	pthread_mutex_t			*mutex;
+}				t_fork;
 
 typedef struct s_philo
 {
 	int						id;
+	bool					is_dead;
+	long long				ms_start_time;
 	long long				ms_to_die;
 	long long				ms_to_sleep;
 	long long				ms_to_eat;
 	long long				ms_last_ate_at;
-	long long				must_eat_cnt;
-	pthread_mutex_t			*left_fork;
-	pthread_mutex_t			*right_fork;
+	int						must_eat_cnt;
+	t_fork					*left_fork;
+	t_fork					*right_fork;
 	pthread_t				*thread;
 }				t_philo;
 
 typedef struct s_routine
 {
+	long long				start_time;
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
 	pthread_mutex_t			*death_mut;
 	bool					*some_died;
-	long long				start_time;
 }				t_routine;
 
 // creating data, forks, philos
 t_data			*create_data(int argc, char **argv);
-pthread_mutex_t	**create_forks(t_data *data);
-t_philo			**create_philos(t_data *data, pthread_mutex_t **forks);
+t_fork			**create_forks(t_data *data);
+t_philo			**create_philos(t_data *data, t_fork **forks);
 
 // philosophize
-void			philosophize(t_data *data, t_philo **philos,
-					pthread_mutex_t **forks);
+void	philosophize(t_data *data, t_philo **philos,
+			pthread_mutex_t **forks)
 
 // philo_routine
 void			*philo_routine(void *r_void);
-// bool			check_alive(t_routine *r, long long time);
-
-// time
-long long		get_time(void);
-int				ft_usleep(long long ms);
 
 // messages
 void			fork_message(long long ms, t_routine *r);
@@ -79,11 +82,16 @@ void			sleep_message(long long ms, t_routine *r);
 void			think_message(long long ms, t_routine *r);
 void			death_message(long long ms, t_routine *r);
 
+// free functions
+void			ft_free_2d_arr(void **arr);
+void			free_forks(t_fork **forks);
+void			free_philos(t_philo **philos);
+void			free_resources(t_data *data, t_philo **philos, t_fork **forks);
+
 // helpers
 void			*ft_calloc(size_t count, size_t size);
-void			ft_free_2d_arr(void **arr);
-void			ft_free_2d_mutex_arr(pthread_mutex_t **arr);
-void			free_resources(t_data *data, t_philo **philos,
-					pthread_mutex_t **forks);
+int				ft_null_terminated_arr_len(void **arr);
+int				ft_usleep(long long ms);
+long long		get_time(void);
 
 #endif
