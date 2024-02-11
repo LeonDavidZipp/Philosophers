@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 14:27:28 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:28:44 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	philo_eat(t_routine *r);
 static void	philo_sleep(t_routine *r);
-static void	philo_death(t_routine *r, long long time);
-static bool	check_alive(t_routine *r, long long time);
+static bool	check_alive(t_routine *r);
 
 void	*philo_routine(void *r_void)
 {
