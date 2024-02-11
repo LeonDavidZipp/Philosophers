@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 14:49:54 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 18:43:29 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	philo_eat(t_routine *r);
 static void	philo_sleep(t_routine *r);
+static boo	philo_take_forks(t_routine *r);
 static bool	check_alive(t_routine *r);
 
 void	*philo_routine(void *r_void)
@@ -29,6 +30,13 @@ void	*philo_routine(void *r_void)
 		think_message(get_time() - r->ms_start_time, r);
 		if (!check_alive(r))
 			break ;
+		philo_take_forks(r);
+		if (!check_alive(r))
+		{
+			pthread_mutex_unlock(r->philo->left_fork->mutex);
+			pthread_mutex_unlock(r->philo->right_fork->mutex);
+			break ;
+		}
 		philo_eat(r);
 		if (!check_alive(r))
 			break ;
@@ -37,10 +45,8 @@ void	*philo_routine(void *r_void)
 	return (NULL);
 }
 
-static void	philo_eat(t_routine *r)
+static void	philo_take_forks(t_routine *r)
 {
-	long long	ms_new_ate_at;
-
 	if (r->philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(r->philo->left_fork->mutex);
@@ -55,8 +61,13 @@ static void	philo_eat(t_routine *r)
 		pthread_mutex_lock(r->philo->left_fork->mutex);
 		fork_message(get_time() - r->ms_start_time, r);
 	}
+}
+
+static void	philo_eat(t_routine *r)
+{
+	long long	ms_new_ate_at;
+
 	ms_new_ate_at = get_time();
-	// r->philo->ms_last_ate_at = ms_new_ate_at + r->philo->ms_to_eat;
 	r->philo->ms_last_ate_at = ms_new_ate_at;
 	eat_message(ms_new_ate_at - r->ms_start_time, r);
 	if (r->philo->must_eat_cnt > 0)
@@ -79,12 +90,7 @@ static bool	check_alive(t_routine *r)
 	time = get_time();
 	pthread_mutex_lock(r->death_mut);
 	if (time - r->philo->ms_last_ate_at >= r->philo->ms_to_die)
-	{
 		r->philo->is_dead = true;
-		// printf("-----------------------------------\n");
-		// printf("%lld %d died\n", time - r->ms_start_time, r->philo->id);
-		// printf("-----------------------------------\n");
-	}
 	if (r->philo->is_dead == true && *r->some_died == false)
 	{
 		death_message(time - r->ms_start_time, r);

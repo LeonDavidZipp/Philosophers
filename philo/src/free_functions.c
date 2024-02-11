@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:39 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 14:24:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 17:49:23 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@ void	ft_free_2d_arr(void **arr)
 	i = -1;
 	while (arr[++i])
 		free(arr[i]);
-	free(arr);
-}
-
-void	ft_free_2d_mutex_arr(pthread_mutex_t **arr)
-{
-	int			i;
-
-	i = -1;
-	while (arr[++i])
-	{
-		pthread_mutex_destroy(arr[i]);
-		free(arr[i]);
-	}
 	free(arr);
 }
 
@@ -68,3 +55,7 @@ void	free_resources(t_data *data, t_philo **philos, t_fork **forks)
 	free_forks(forks);
 	free(data);
 }
+
+// thinking: waiting for a time as short as possible
+// eating: eating for ms_to_eat seconds
+// sleeping: sleeping for ms_to_sleep seconds
