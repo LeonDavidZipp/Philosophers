@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/09 17:54:51 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:50:43 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	think_message(long long ms, t_routine *r)
 	if (some_died)
 	{
 		pthread_mutex_unlock(r->p_mut);
-		printf("some died in if\n");
 		return ;
 	}
 	printf("\033[0;33m");
