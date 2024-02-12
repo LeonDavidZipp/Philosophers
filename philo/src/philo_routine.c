@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 19:29:33 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:34:41 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,6 @@ void	*philo_routine(void *r_void)
 	}
 	return (NULL);
 }
-
-// static bool	philo_take_forks(t_routine *r)
-// {
-// 	if (r->philo->id % 2 == 0)
-// 	{
-// 		pthread_mutex_lock(r->philo->left_fork->mutex);
-// 		fork_message(get_time() - r->ms_start_time, r);
-// 		pthread_mutex_lock(r->philo->right_fork->mutex);
-// 		fork_message(get_time() - r->ms_start_time, r);
-// 		return ;
-// 	}
-// 	pthread_mutex_lock(r->philo->right_fork->mutex);
-// 	fork_message(get_time() - r->ms_start_time, r);
-// 	pthread_mutex_lock(r->philo->left_fork->mutex);
-// 	fork_message(get_time() - r->ms_start_time, r);
-// }
 
 static bool	philo_take_forks(t_routine *r)
 {
