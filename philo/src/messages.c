@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   messages.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 14:50:43 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/18 17:57:01 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	fork_message(long long ms, t_routine *r)
 {
 	bool	some_died;
 
-	pthread_mutex_lock(r->p_mut);
 	pthread_mutex_lock(r->death_mut);
 	some_died = *r->some_died;
 	pthread_mutex_unlock(r->death_mut);
+	pthread_mutex_lock(r->p_mut);
 	if (some_died)
 	{
 		pthread_mutex_unlock(r->p_mut);
@@ -35,10 +35,10 @@ void	eat_message(long long ms, t_routine *r)
 {
 	bool	some_died;
 
-	pthread_mutex_lock(r->p_mut);
 	pthread_mutex_lock(r->death_mut);
 	some_died = *r->some_died;
 	pthread_mutex_unlock(r->death_mut);
+	pthread_mutex_lock(r->p_mut);
 	if (some_died)
 	{
 		pthread_mutex_unlock(r->p_mut);
@@ -54,10 +54,10 @@ void	sleep_message(long long ms, t_routine *r)
 {
 	bool	some_died;
 
-	pthread_mutex_lock(r->p_mut);
 	pthread_mutex_lock(r->death_mut);
 	some_died = *r->some_died;
 	pthread_mutex_unlock(r->death_mut);
+	pthread_mutex_lock(r->p_mut);
 	if (some_died)
 	{
 		pthread_mutex_unlock(r->p_mut);
@@ -73,10 +73,10 @@ void	think_message(long long ms, t_routine *r)
 {
 	bool	some_died;
 
-	pthread_mutex_lock(r->p_mut);
 	pthread_mutex_lock(r->death_mut);
 	some_died = *r->some_died;
 	pthread_mutex_unlock(r->death_mut);
+	pthread_mutex_lock(r->p_mut);
 	if (some_died)
 	{
 		pthread_mutex_unlock(r->p_mut);
