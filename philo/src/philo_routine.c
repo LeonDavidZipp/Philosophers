@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/18 17:49:24 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/18 18:21:03 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ void	*philo_routine(void *r_void)
 	{
 		if (!check_alive(r))
 			break ;
+		think_message(get_time() - r->ms_start_time, r);
+		if (!check_alive(r))
+			break ;
 		if (!philo_take_forks(r))
-			continue ;
+			break ;
 		if (!check_alive(r))
 		{
 			pthread_mutex_unlock(r->philo->left_fork->mutex);
@@ -41,28 +44,32 @@ void	*philo_routine(void *r_void)
 		if (!check_alive(r))
 			break ;
 		philo_sleep(r);
-		if (!check_alive(r))
-			break ;
-		think_message(get_time() - r->ms_start_time, r);
 	}
 	return (NULL);
 }
 
 static bool	philo_take_forks(t_routine *r)
 {
-	if (r->philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(r->philo->right_fork->mutex);
-		r->philo->right_fork->is_taken = true;
-		fork_message(get_time() - r->ms_start_time, r);
-		pthread_mutex_lock(r->philo->left_fork->mutex);
-		r->philo->left_fork->is_taken = true;
-		fork_message(get_time() - r->ms_start_time, r);
-		return (true);
-	}
+	// if (r->philo->id % 2 == 0)
+	// {
+	// 	pthread_mutex_lock(r->philo->right_fork->mutex);
+	// 	r->philo->right_fork->is_taken = true;
+	// 	fork_message(get_time() - r->ms_start_time, r);
+	// 	pthread_mutex_lock(r->philo->left_fork->mutex);
+	// 	r->philo->left_fork->is_taken = true;
+	// 	fork_message(get_time() - r->ms_start_time, r);
+	// 	return (true);
+	// }
+	if (!check_alive(r))
+		return (false);
 	pthread_mutex_lock(r->philo->left_fork->mutex);
 	r->philo->left_fork->is_taken = true;
 	fork_message(get_time() - r->ms_start_time, r);
+	if (!check_alive(r))
+	{
+		pthread_mutex_unlock(r->philo->left_fork->mutex);
+		return (false);
+	}
 	pthread_mutex_lock(r->philo->right_fork->mutex);
 	r->philo->right_fork->is_taken = true;
 	fork_message(get_time() - r->ms_start_time, r);
