@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/18 18:21:03 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/18 20:46:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,19 @@ void	*philo_routine(void *r_void)
 		&& r->philo->is_dead == false)
 	{
 		if (!check_alive(r))
-			break ;
+			return (NULL);
 		think_message(get_time() - r->ms_start_time, r);
-		if (!check_alive(r))
-			break ;
 		if (!philo_take_forks(r))
-			break ;
-		if (!check_alive(r))
-		{
-			pthread_mutex_unlock(r->philo->left_fork->mutex);
-			pthread_mutex_unlock(r->philo->right_fork->mutex);
-			break ;
-		}
+			return (NULL);
+		// if (!check_alive(r))
+		// {
+		// 	pthread_mutex_unlock(r->philo->left_fork->mutex);
+		// 	pthread_mutex_unlock(r->philo->right_fork->mutex);
+		// 	return (NULL);
+		// }
 		philo_eat(r);
 		if (!check_alive(r))
-			break ;
+			return (NULL);
 		philo_sleep(r);
 	}
 	return (NULL);
@@ -50,28 +48,22 @@ void	*philo_routine(void *r_void)
 
 static bool	philo_take_forks(t_routine *r)
 {
-	// if (r->philo->id % 2 == 0)
-	// {
-	// 	pthread_mutex_lock(r->philo->right_fork->mutex);
-	// 	r->philo->right_fork->is_taken = true;
-	// 	fork_message(get_time() - r->ms_start_time, r);
-	// 	pthread_mutex_lock(r->philo->left_fork->mutex);
-	// 	r->philo->left_fork->is_taken = true;
-	// 	fork_message(get_time() - r->ms_start_time, r);
-	// 	return (true);
-	// }
 	if (!check_alive(r))
 		return (false);
 	pthread_mutex_lock(r->philo->left_fork->mutex);
-	r->philo->left_fork->is_taken = true;
-	fork_message(get_time() - r->ms_start_time, r);
 	if (!check_alive(r))
 	{
 		pthread_mutex_unlock(r->philo->left_fork->mutex);
 		return (false);
 	}
+	fork_message(get_time() - r->ms_start_time, r);
 	pthread_mutex_lock(r->philo->right_fork->mutex);
-	r->philo->right_fork->is_taken = true;
+	if (!check_alive(r))
+	{
+		pthread_mutex_unlock(r->philo->left_fork->mutex);
+		pthread_mutex_unlock(r->philo->right_fork->mutex);
+		return (false);
+	}
 	fork_message(get_time() - r->ms_start_time, r);
 	return (true);
 }
@@ -86,16 +78,27 @@ static void	philo_eat(t_routine *r)
 	if (r->philo->must_eat_cnt > 0)
 		r->philo->must_eat_cnt--;
 	ft_usleep(r->philo->ms_to_eat);
-	r->philo->left_fork->is_taken = false;
-	r->philo->right_fork->is_taken = false;
 	pthread_mutex_unlock(r->philo->left_fork->mutex);
 	pthread_mutex_unlock(r->philo->right_fork->mutex);
 }
 
 static void	philo_sleep(t_routine *r)
 {
-	sleep_message(get_time() - r->ms_start_time, r);
-	ft_usleep(r->philo->ms_to_sleep);
+	// sleep_message(get_time() - r->ms_start_time, r);
+	// ft_usleep(r->philo->ms_to_sleep);
+	long long start_time = get_time();
+	long long end_time = start_time + r->philo->ms_to_sleep;
+	long long time;
+
+	sleep_message(start_time - r->ms_start_time, r);
+	time = get_time();
+	while (time < end_time)
+	{
+		if (!check_alive(r))
+			break;
+		ft_usleep(1); // sleep for a very short time
+		time = get_time();
+	}
 }
 
 // static bool	check_alive(t_routine *r)
@@ -122,12 +125,14 @@ static bool	check_alive(t_routine *r)
 	long long	time;
 
 	time = get_time();
+	pthread_mutex_lock(r->p_mut);
 	pthread_mutex_lock(r->death_mut);
 	if (time - r->philo->ms_last_ate_at >= r->philo->ms_to_die)
 		r->philo->is_dead = true;
 	if (*r->some_died == true)
 	{
 		pthread_mutex_unlock(r->death_mut);
+		pthread_mutex_unlock(r->p_mut);
 		return (false);
 	}
 	if (r->philo->is_dead == true && *r->some_died == false)
@@ -135,8 +140,10 @@ static bool	check_alive(t_routine *r)
 		death_message(time - r->ms_start_time, r);
 		*r->some_died = true;
 		pthread_mutex_unlock(r->death_mut);
+		pthread_mutex_unlock(r->p_mut);
 		return (false);
 	}
 	pthread_mutex_unlock(r->death_mut);
+	pthread_mutex_unlock(r->p_mut);
 	return (true);
 }
