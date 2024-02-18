@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/12 10:34:41 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/18 17:23:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	*philo_routine(void *r_void)
 	t_routine	*r;
 
 	r = (t_routine *)r_void;
+	if (r->philo->id % 2 == 0)
+		ft_usleep(10);
 	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
 		&& *r->some_died == false && r->philo->is_dead == false)
 	{
@@ -48,18 +50,23 @@ void	*philo_routine(void *r_void)
 
 static bool	philo_take_forks(t_routine *r)
 {
-	if (r->philo->left_fork->is_taken == false
-		&& r->philo->right_fork->is_taken == false)
+	if (r->philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(r->philo->left_fork->mutex);
-		r->philo->left_fork->is_taken = true;
-		fork_message(get_time() - r->ms_start_time, r);
 		pthread_mutex_lock(r->philo->right_fork->mutex);
 		r->philo->right_fork->is_taken = true;
 		fork_message(get_time() - r->ms_start_time, r);
+		pthread_mutex_lock(r->philo->left_fork->mutex);
+		r->philo->left_fork->is_taken = true;
+		fork_message(get_time() - r->ms_start_time, r);
 		return (true);
 	}
-	return (false);
+	pthread_mutex_lock(r->philo->left_fork->mutex);
+	r->philo->left_fork->is_taken = true;
+	fork_message(get_time() - r->ms_start_time, r);
+	pthread_mutex_lock(r->philo->right_fork->mutex);
+	r->philo->right_fork->is_taken = true;
+	fork_message(get_time() - r->ms_start_time, r);
+	return (true);
 }
 
 static void	philo_eat(t_routine *r)

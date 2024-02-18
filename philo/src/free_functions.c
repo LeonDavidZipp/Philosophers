@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:39 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/11 17:49:23 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/18 17:02:26 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,3 @@ void	free_resources(t_data *data, t_philo **philos, t_fork **forks)
 	free_forks(forks);
 	free(data);
 }
-
-// thinking: waiting for a time as short as possible
-// eating: eating for ms_to_eat seconds
-// sleeping: sleeping for ms_to_sleep seconds
