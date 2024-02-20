@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/20 17:40:15 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/20 18:07:39 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ static bool	check_alive(t_routine *r)
 	}
 	if (r->philo->is_dead == true && *r->some_died == false)
 	{
-		death_message(time - r->ms_start_time, r);
+		// death_message(time - r->ms_start_time, r);
 		*r->some_died = true;
 		pthread_mutex_unlock(r->death_mut);
 		pthread_mutex_unlock(r->p_mut);
