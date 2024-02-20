@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   messages.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/18 18:24:27 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/20 16:07:55 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ void	death_message(long long ms, t_routine *r)
 	some_died = *r->some_died;
 	if (some_died)
 		return ;
-	// pthread_mutex_lock(r->p_mut);
 	printf("\033[0;31m");
 	printf("%lld %d died", ms, r->philo->id);
 	printf("\033[0m\n");
-	// pthread_mutex_unlock(r->p_mut);
 }
