@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 12:00:46 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 16:33:53 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void			handle_thread_error(t_data *data, t_philo **philos,
 
 void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 {
-	int					i;
 	t_p_routine			*philo_routines;
 	t_m_routine			monit_routine;
 	pthread_mutex_t		p_mut;
@@ -37,17 +36,12 @@ void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 	monit_routine.p_mut = &p_mut;
 	monit_routine.death_mut = &death_mut;
 	if (!philo_routines)
-	{
-		free_resources(data, philos, forks);
-		exit(1);
-	}
+		return (free(philo_routines));
 	if (!start_threads(data, philos, philo_routines))
 		handle_thread_error(data, philos, forks, philo_routines);
-	pthread_create(&monitor_thread, NULL, monitor_routine,
-		(void *)&monit_routine);
-	i = -1;
-	while (++i < data->philo_cnt)
-		pthread_join(*philos[i]->thread, NULL);
+	pthread_create(&monitor_thread, NULL, monitor_routine, &monit_routine);
+	while (--data->philo_cnt >= 0)
+		pthread_join(*philos[data->philo_cnt]->thread, NULL);
 	pthread_join(monitor_thread, NULL);
 	pthread_mutex_destroy(&p_mut);
 	pthread_mutex_destroy(&death_mut);
@@ -75,6 +69,7 @@ static t_p_routine	*create_philo_routines(t_data *data, t_philo **philos,
 		routines[i].some_died = &data->some_died;
 		routines[i].death_mut = death_mut;
 		routines[i].ms_start_time = data->ms_start_time;
+		routines[i].philo_cnt = data->philo_cnt;
 	}
 	return (routines);
 }

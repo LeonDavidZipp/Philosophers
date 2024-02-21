@@ -6,13 +6,14 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:38:38 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 12:30:11 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 16:01:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void		fill_philos(t_philo **philos, t_data *data, t_fork **forks);
+void					fill_philos(t_philo **philos, t_data *data,
+							t_fork **forks);
 static pthread_mutex_t	*create_eat_mut(t_philo **philos,
 							t_data *data, t_fork **forks);
 

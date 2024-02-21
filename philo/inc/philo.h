@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 12:20:23 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 16:33:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_philo
 typedef struct s_p_routine
 {
 	long long				ms_start_time;
+	int						philo_cnt;
 	t_philo					*philo;
 	pthread_mutex_t			*p_mut;
 	pthread_mutex_t			*death_mut;
