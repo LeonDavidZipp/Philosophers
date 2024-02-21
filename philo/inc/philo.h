@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 09:55:07 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 12:20:23 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	long long				ms_to_eat;
 	long long				ms_last_ate_at;
 	int						must_eat_cnt;
+	pthread_mutex_t			*eat_mut;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
 	pthread_t				*thread;
@@ -85,12 +86,15 @@ void			philosophize(t_data *data, t_philo **philos, t_fork **forks);
 // philo_routine
 void			*philo_routine(void *r_void);
 
+// monitor_routine
+void			*monitor_routine(void *r_void);
+
 // messages
 void			fork_message(long long ms, t_p_routine *r);
 void			eat_message(long long ms, t_p_routine *r);
 void			sleep_message(long long ms, t_p_routine *r);
 void			think_message(long long ms, t_p_routine *r);
-void			death_message(long long ms, t_p_routine *r);
+void			death_message(long long ms, int id);
 
 // free functions
 void			ft_free_2d_arr(void **arr);

@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 09:51:05 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 12:33:18 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ static void	philo_eat(t_p_routine *r)
 	ms_new_ate_at = get_time();
 	r->philo->ms_last_ate_at = ms_new_ate_at;
 	eat_message(ms_new_ate_at - r->ms_start_time, r);
+	pthread_mutex_lock(r->philo->eat_mut);
 	if (r->philo->must_eat_cnt > 0)
 		r->philo->must_eat_cnt--;
+	pthread_mutex_unlock(r->philo->eat_mut);
 	ft_usleep(r->philo->ms_to_eat);
 	pthread_mutex_unlock(r->philo->left_fork->mutex);
 	pthread_mutex_unlock(r->philo->right_fork->mutex);
@@ -85,23 +87,21 @@ static void	philo_eat(t_p_routine *r)
 
 static void	philo_sleep(t_p_routine *r)
 {
-	// long long	start_time;
-	// long long	end_time;
-	// long long	time;
+	long long	start_time;
+	long long	end_time;
+	long long	time;
 
-	// start_time = get_time();
-	// end_time = start_time + r->philo->ms_to_sleep;
-	// sleep_message(start_time - r->ms_start_time, r);
-	// time = get_time();
-	// while (time < end_time)
-	// {
-	// 	if (!check_alive(r))
-	// 		break ;
-	// 	ft_usleep(1);
-	// 	time = get_time();
-	// }
-	ft_usleep(r->philo->ms_to_sleep);
-	sleep_message(get_time() - r->ms_start_time, r);
+	start_time = get_time();
+	end_time = start_time + r->philo->ms_to_sleep;
+	sleep_message(start_time - r->ms_start_time, r);
+	time = get_time();
+	while (time < end_time)
+	{
+		if (!check_alive(r))
+			break ;
+		ft_usleep(1);
+		time = get_time();
+	}
 }
 
 // static bool	check_alive(t_p_routine *r)
@@ -140,7 +140,6 @@ static bool	check_alive(t_p_routine *r)
 	}
 	if (r->philo->is_dead == true && *r->some_died == false)
 	{
-		// death_message(time - r->ms_start_time, r);
 		*r->some_died = true;
 		pthread_mutex_unlock(r->death_mut);
 		pthread_mutex_unlock(r->p_mut);

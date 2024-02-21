@@ -6,14 +6,16 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 09:48:49 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 12:00:46 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static t_p_routine	*create_routines(t_data *data, t_philo **philos,
+static t_p_routine	*create_philo_routines(t_data *data, t_philo **philos,
 						pthread_mutex_t *p_mut, pthread_mutex_t *death_mut);
+static void			create_monitor_routine(t_m_routine *r, t_data *data,
+						t_philo **philos);
 static bool			start_threads(t_data *data, t_philo **philos,
 						t_p_routine *routines);
 static void			handle_thread_error(t_data *data, t_philo **philos,
@@ -23,12 +25,17 @@ void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 {
 	int					i;
 	t_p_routine			*philo_routines;
+	t_m_routine			monit_routine;
 	pthread_mutex_t		p_mut;
 	pthread_mutex_t		death_mut;
+	pthread_t			monitor_thread;
 
 	pthread_mutex_init(&p_mut, NULL);
 	pthread_mutex_init(&death_mut, NULL);
-	philo_routines = create_routines(data, philos, &p_mut, &death_mut);
+	philo_routines = create_philo_routines(data, philos, &p_mut, &death_mut);
+	create_monitor_routine(&monit_routine, data, philos);
+	monit_routine.p_mut = &p_mut;
+	monit_routine.death_mut = &death_mut;
 	if (!philo_routines)
 	{
 		free_resources(data, philos, forks);
@@ -36,21 +43,25 @@ void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 	}
 	if (!start_threads(data, philos, philo_routines))
 		handle_thread_error(data, philos, forks, philo_routines);
+	pthread_create(&monitor_thread, NULL, monitor_routine,
+		(void *)&monit_routine);
 	i = -1;
 	while (++i < data->philo_cnt)
 		pthread_join(*philos[i]->thread, NULL);
+	pthread_join(monitor_thread, NULL);
 	pthread_mutex_destroy(&p_mut);
 	pthread_mutex_destroy(&death_mut);
 	free(philo_routines);
 }
 
-static t_p_routine	*create_routines(t_data *data, t_philo **philos,
+static t_p_routine	*create_philo_routines(t_data *data, t_philo **philos,
 	pthread_mutex_t *p_mut, pthread_mutex_t *death_mut)
 {
 	t_p_routine	*routines;
 	int			i;
 
-	routines = (t_p_routine *)ft_calloc(data->philo_cnt + 1, sizeof(t_p_routine));
+	routines = (t_p_routine *)ft_calloc(data->philo_cnt + 1,
+			sizeof(t_p_routine));
 	if (!routines)
 	{
 		printf("\033[0;31mError: malloc failed\033[0m\n");
@@ -66,6 +77,15 @@ static t_p_routine	*create_routines(t_data *data, t_philo **philos,
 		routines[i].ms_start_time = data->ms_start_time;
 	}
 	return (routines);
+}
+
+static void	create_monitor_routine(t_m_routine *r, t_data *data,
+				t_philo **philos)
+{
+	r->ms_start_time = data->ms_start_time;
+	r->philo_cnt = data->philo_cnt;
+	r->philos = philos;
+	r->some_died = &data->some_died;
 }
 
 static bool	start_threads(t_data *data, t_philo **philos,

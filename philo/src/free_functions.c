@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzipp <lzipp@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:39 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/18 17:02:26 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 12:29:27 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	free_philos(t_philo **philos)
 	while (philos[++i])
 	{
 		free(philos[i]->thread);
+		pthread_mutex_destroy(philos[i]->eat_mut);
+		free(philos[i]->eat_mut);
 		free(philos[i]);
 	}
 	free(philos);

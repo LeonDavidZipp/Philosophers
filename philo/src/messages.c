@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 09:48:49 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 10:37:24 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,10 @@ void	think_message(long long ms, t_p_routine *r)
 // 	printf("%lld %d died", ms, r->philo->id);
 // 	printf("\033[0m\n");
 // }
+
+void	death_message(long long ms, int id)
+{
+	printf("\033[0;31m");
+	printf("%lld %d died", ms, id);
+	printf("\033[0m\n");
+}
