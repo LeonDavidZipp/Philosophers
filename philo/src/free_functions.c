@@ -36,6 +36,20 @@ void	free_forks(t_fork **forks)
 	free(forks);
 }
 
+void	free_forks(t_fork **forks)
+{
+	int	i;
+
+	i = -1;
+	while (forks[++i])
+	{
+		pthread_mutex_destroy(forks[i]->mutex);
+		free(forks[i]->mutex);
+		free(forks[i]);
+	}
+	free(forks);
+}
+
 void	free_philos(t_philo **philos)
 {
 	int	i;

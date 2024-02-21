@@ -29,8 +29,9 @@ int	main(int argc, char **argv)
 	}
 	forks = create_forks(data);
 	philos = create_philos(data, forks);
-	philosophize(data, philos, forks);
-	free_resources(data, philos, forks);
+	free(data);
+	philosophize(philos, forks);
+	free_resources(philos, forks);
 	return (0);
 }
 

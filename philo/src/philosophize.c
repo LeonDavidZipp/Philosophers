@@ -29,6 +29,7 @@ void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 	pthread_mutex_t		death_mut;
 	pthread_t			monitor_thread;
 
+	philo_cnt = ft_null_terminated_arr_len((void **)philos);
 	pthread_mutex_init(&p_mut, NULL);
 	pthread_mutex_init(&death_mut, NULL);
 	philo_routines = create_philo_routines(data, philos, &p_mut, &death_mut);
@@ -89,13 +90,16 @@ static bool	start_threads(t_data *data, t_philo **philos,
 	int					i;
 
 	i = -1;
-	while (++i < data->philo_cnt)
+	while (++i < philo_cnt)
 	{
 		philos[i]->thread = (pthread_t *)malloc(sizeof(pthread_t));
 		if (!philos[i]->thread)
 			return (false);
 		pthread_create(philos[i]->thread, NULL, philo_routine,
 			(void *)&routines[i]);
+		printf("thread created\n");
+		printf("philo %d started\n", i + 1);
+		printf("----------------\n");
 	}
 	return (true);
 }

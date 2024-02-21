@@ -35,6 +35,16 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
+int	ft_null_terminated_arr_len(void **arr)
+{
+	int	len;
+
+	len = 0;
+	while (arr[len])
+		len++;
+	return (len);
+}
+
 long long	get_time(void)
 {
 	struct timeval	time;

@@ -31,8 +31,8 @@ typedef struct s_data
 	int						must_eat_cnt;
 	long long				ms_start_time;
 	bool					some_died;
-}				t_data;
 
+}				t_data;
 typedef struct s_fork
 {
 	int						id;
@@ -102,6 +102,12 @@ void			ft_free_2d_arr(void **arr);
 void			free_forks(t_fork **forks);
 void			free_philos(t_philo **philos);
 void			free_resources(t_data *data, t_philo **philos, t_fork **forks);
+
+// free functions
+void			ft_free_2d_arr(void **arr);
+void			free_forks(t_fork **forks);
+void			free_philos(t_philo **philos);
+void			free_resources(t_philo **philos, t_fork **forks);
 
 // helpers
 void			*ft_calloc(size_t count, size_t size);

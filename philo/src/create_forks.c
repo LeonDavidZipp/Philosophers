@@ -13,7 +13,6 @@
 #include "../inc/philo.h"
 
 static void	handle_malloc_error(t_fork **forks, t_data *data);
-
 t_fork	**create_forks(t_data *data)
 {
 	t_fork			**forks;
