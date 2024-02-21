@@ -6,13 +6,13 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 13:59:31 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/20 18:07:47 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 09:48:49 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	fork_message(long long ms, t_routine *r)
+void	fork_message(long long ms, t_p_routine *r)
 {
 	bool	some_died;
 
@@ -31,7 +31,7 @@ void	fork_message(long long ms, t_routine *r)
 	pthread_mutex_unlock(r->p_mut);
 }
 
-void	eat_message(long long ms, t_routine *r)
+void	eat_message(long long ms, t_p_routine *r)
 {
 	bool	some_died;
 
@@ -50,7 +50,7 @@ void	eat_message(long long ms, t_routine *r)
 	pthread_mutex_unlock(r->p_mut);
 }
 
-void	sleep_message(long long ms, t_routine *r)
+void	sleep_message(long long ms, t_p_routine *r)
 {
 	bool	some_died;
 
@@ -69,7 +69,7 @@ void	sleep_message(long long ms, t_routine *r)
 	pthread_mutex_unlock(r->p_mut);
 }
 
-void	think_message(long long ms, t_routine *r)
+void	think_message(long long ms, t_p_routine *r)
 {
 	bool	some_died;
 
@@ -88,7 +88,7 @@ void	think_message(long long ms, t_routine *r)
 	pthread_mutex_unlock(r->p_mut);
 }
 
-// void	death_message(long long ms, t_routine *r)
+// void	death_message(long long ms, t_p_routine *r)
 // {
 // 	bool	some_died;
 

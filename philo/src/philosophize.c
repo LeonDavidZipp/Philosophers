@@ -6,23 +6,23 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:02:21 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/20 17:44:15 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 09:48:49 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static t_routine	*create_routines(t_data *data, t_philo **philos,
+static t_p_routine	*create_routines(t_data *data, t_philo **philos,
 						pthread_mutex_t *p_mut, pthread_mutex_t *death_mut);
 static bool			start_threads(t_data *data, t_philo **philos,
-						t_routine *routines);
+						t_p_routine *routines);
 static void			handle_thread_error(t_data *data, t_philo **philos,
-						t_fork **forks, t_routine *routines);
+						t_fork **forks, t_p_routine *routines);
 
 void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 {
 	int					i;
-	t_routine			*philo_routines;
+	t_p_routine			*philo_routines;
 	pthread_mutex_t		p_mut;
 	pthread_mutex_t		death_mut;
 
@@ -44,13 +44,13 @@ void	philosophize(t_data *data, t_philo **philos, t_fork **forks)
 	free(philo_routines);
 }
 
-static t_routine	*create_routines(t_data *data, t_philo **philos,
+static t_p_routine	*create_routines(t_data *data, t_philo **philos,
 	pthread_mutex_t *p_mut, pthread_mutex_t *death_mut)
 {
-	t_routine	*routines;
+	t_p_routine	*routines;
 	int			i;
 
-	routines = (t_routine *)ft_calloc(data->philo_cnt + 1, sizeof(t_routine));
+	routines = (t_p_routine *)ft_calloc(data->philo_cnt + 1, sizeof(t_p_routine));
 	if (!routines)
 	{
 		printf("\033[0;31mError: malloc failed\033[0m\n");
@@ -69,7 +69,7 @@ static t_routine	*create_routines(t_data *data, t_philo **philos,
 }
 
 static bool	start_threads(t_data *data, t_philo **philos,
-	t_routine *routines)
+	t_p_routine *routines)
 {
 	int					i;
 
@@ -86,7 +86,7 @@ static bool	start_threads(t_data *data, t_philo **philos,
 }
 
 static void	handle_thread_error(t_data *data, t_philo **philos,
-	t_fork **forks, t_routine *routines)
+	t_fork **forks, t_p_routine *routines)
 {
 	printf("\033[0;31mError: malloc failed\033[0m\n");
 	free_resources(data, philos, forks);

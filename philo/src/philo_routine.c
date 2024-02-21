@@ -6,22 +6,22 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/20 18:07:39 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 09:51:05 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static void	philo_eat(t_routine *r);
-static void	philo_sleep(t_routine *r);
-static bool	philo_take_forks(t_routine *r);
-static bool	check_alive(t_routine *r);
+static void	philo_eat(t_p_routine *r);
+static void	philo_sleep(t_p_routine *r);
+static bool	philo_take_forks(t_p_routine *r);
+static bool	check_alive(t_p_routine *r);
 
 void	*philo_routine(void *r_void)
 {
-	t_routine	*r;
+	t_p_routine	*r;
 
-	r = (t_routine *)r_void;
+	r = (t_p_routine *)r_void;
 	if (r->philo->id % 2 == 0)
 		ft_usleep(10);
 	while ((r->philo->must_eat_cnt == -1 || r->philo->must_eat_cnt > 0)
@@ -40,7 +40,7 @@ void	*philo_routine(void *r_void)
 	return (NULL);
 }
 
-static bool	philo_take_forks(t_routine *r)
+static bool	philo_take_forks(t_p_routine *r)
 {
 	pthread_mutex_t	*first;
 	pthread_mutex_t	*second;
@@ -69,7 +69,7 @@ static bool	philo_take_forks(t_routine *r)
 	return (true);
 }
 
-static void	philo_eat(t_routine *r)
+static void	philo_eat(t_p_routine *r)
 {
 	long long	ms_new_ate_at;
 
@@ -83,26 +83,7 @@ static void	philo_eat(t_routine *r)
 	pthread_mutex_unlock(r->philo->right_fork->mutex);
 }
 
-// static void	philo_sleep(t_routine *r)
-// {
-// 	// sleep_message(get_time() - r->ms_start_time, r);
-// 	// ft_usleep(r->philo->ms_to_sleep);
-// 	long long start_time = get_time();
-// 	long long end_time = start_time + r->philo->ms_to_sleep;
-// 	long long time;
-
-// 	sleep_message(start_time - r->ms_start_time, r);
-// 	time = get_time();
-// 	while (time < end_time)
-// 	{
-// 		if (!check_alive(r))
-// 			break;
-// 		ft_usleep(1); // sleep for a very short time
-// 		time = get_time();
-// 	}
-// }
-
-static void	philo_sleep(t_routine *r)
+static void	philo_sleep(t_p_routine *r)
 {
 	// long long	start_time;
 	// long long	end_time;
@@ -123,7 +104,7 @@ static void	philo_sleep(t_routine *r)
 	sleep_message(get_time() - r->ms_start_time, r);
 }
 
-// static bool	check_alive(t_routine *r)
+// static bool	check_alive(t_p_routine *r)
 // {
 // 	long long	time;
 
@@ -142,7 +123,7 @@ static void	philo_sleep(t_routine *r)
 // 	return (true);
 // }
 
-static bool	check_alive(t_routine *r)
+static bool	check_alive(t_p_routine *r)
 {
 	long long	time;
 
