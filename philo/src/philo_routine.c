@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:17:28 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 12:33:18 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 14:05:35 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,8 @@ static void	philo_eat(t_p_routine *r)
 
 static void	philo_sleep(t_p_routine *r)
 {
-	long long	start_time;
-	long long	end_time;
-	long long	time;
-
-	start_time = get_time();
-	end_time = start_time + r->philo->ms_to_sleep;
-	sleep_message(start_time - r->ms_start_time, r);
-	time = get_time();
-	while (time < end_time)
-	{
-		if (!check_alive(r))
-			break ;
-		ft_usleep(1);
-		time = get_time();
-	}
+	sleep_message(get_time() - r->ms_start_time, r);
+	ft_usleep(r->philo->ms_to_sleep);
 }
 
 // static bool	check_alive(t_p_routine *r)
@@ -128,24 +115,15 @@ static bool	check_alive(t_p_routine *r)
 	long long	time;
 
 	time = get_time();
-	pthread_mutex_lock(r->p_mut);
-	pthread_mutex_lock(r->death_mut);
 	if (time - r->philo->ms_last_ate_at >= r->philo->ms_to_die)
 		r->philo->is_dead = true;
-	if (*r->some_died == true)
-	{
-		pthread_mutex_unlock(r->death_mut);
-		pthread_mutex_unlock(r->p_mut);
-		return (false);
-	}
-	if (r->philo->is_dead == true && *r->some_died == false)
+	pthread_mutex_lock(r->death_mut);
+	if (*r->some_died || r->philo->is_dead)
 	{
 		*r->some_died = true;
 		pthread_mutex_unlock(r->death_mut);
-		pthread_mutex_unlock(r->p_mut);
-		return (false);
+		return false;
 	}
 	pthread_mutex_unlock(r->death_mut);
-	pthread_mutex_unlock(r->p_mut);
 	return (true);
 }
