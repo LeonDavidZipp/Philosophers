@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:48:08 by lzipp             #+#    #+#             */
-/*   Updated: 2024/03/27 10:51:55 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/11 14:35:16 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	t_fork				**forks;
 
 	data = create_data(argc, argv);
-	if (data->fork_cnt == 1 || data->philo_cnt == 1)
+	if (data->fork_cnt == 1)
 	{
 		handle_one_philo(data);
 		free(data);
