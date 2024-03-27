@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 12:02:49 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 18:07:33 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 18:32:38 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_fork
 {
 	int						id;
 	bool					is_taken;
-	pthread_mutex_t			*mutex;
 }				t_fork;
 
 typedef struct s_philo

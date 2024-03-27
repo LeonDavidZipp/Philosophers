@@ -6,7 +6,7 @@
 #    By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/04 12:42:33 by lzipp             #+#    #+#              #
-#    Updated: 2024/02/21 11:56:30 by lzipp            ###   ########.fr        #
+#    Updated: 2024/03/19 11:04:25 by lzipp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC := cc
 CFLAGS := -Wextra -Wall -Werror -pthread
 
 SOURCES := $(addprefix src/, create_data.c create_forks.c create_philos.c \
-free_functions.c helpers.c main.c messages.c monitor_routine.c philo_routine.c \
-philosophize.c)
+free_functions.c helpers.c main.c messages.c philo_routine.c \
+philosophize.c monitor_routine.c)
 OBJECTS := $(SOURCES:.c=.o)
 
 all: $(NAME)

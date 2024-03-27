@@ -6,7 +6,7 @@
 /*   By: lzipp <lzipp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:38:38 by lzipp             #+#    #+#             */
-/*   Updated: 2024/02/21 16:01:18 by lzipp            ###   ########.fr       */
+/*   Updated: 2024/02/21 18:32:23 by lzipp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	fill_philos(t_philo **philos, t_data *data, t_fork **forks)
 		philos[i]->ms_to_eat = data->ms_to_eat;
 		philos[i]->ms_last_ate_at = philos[i]->ms_start_time;
 		philos[i]->must_eat_cnt = data->must_eat_cnt;
-		philos[i]->eat_mut = create_eat_mut(philos, data, forks);
 		philos[i]->left_fork = forks[i];
 		philos[i]->right_fork = forks[(i + 1) % data->philo_cnt];
 		philos[i]->thread = NULL;
